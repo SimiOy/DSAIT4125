@@ -12,7 +12,7 @@
 set -euo pipefail
 
 PROJECT_DIR="/scratch/${USER}/DSAIT4125"
-TMP_DIR="/tmp/${SLURM_JOBID}/cholectrack20"
+TMP_DIR="/tmp/${SLURM_JOB_ID}/cholectrack20"
 SCRATCH_DIR="/scratch/${USER}/datasets"
 ZIP_NAME="cholectrack20.zip"
 
