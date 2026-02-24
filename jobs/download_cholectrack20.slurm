@@ -6,12 +6,12 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --mem-per-cpu=4G
 #SBATCH --time=08:00:00
-#SBATCH --output=jobs/logs/download_cholectrack20.%j.out
-#SBATCH --error=jobs/logs/download_cholectrack20.%j.err
+#SBATCH --output=/scratch/%u/DSAIT4125/jobs/logs/download_cholectrack20.%j.out
+#SBATCH --error=/scratch/%u/DSAIT4125/jobs/logs/download_cholectrack20.%j.err
 
 set -euo pipefail
 
-PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PROJECT_DIR="/scratch/${USER}/DSAIT4125"
 TMP_DIR="/tmp/${SLURM_JOBID}/cholectrack20"
 SCRATCH_DIR="/scratch/${USER}/datasets"
 ZIP_NAME="cholectrack20.zip"
