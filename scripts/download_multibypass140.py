@@ -10,7 +10,7 @@ DATA_DIR = PROJECT_ROOT / "data" / "MultiBypass140"
 
 BASE_URL = "https://s3.unistra.fr/camma_public/datasets/MultiBypass140"
 PARTS = [
-    "multibypass01_corrected.zip",
+    # "multibypass01_corrected.zip",
     "multibypass02.zip",
     "multibypass03.zip",
     "multibypass04.zip",
@@ -49,7 +49,7 @@ def main():
     with zipfile.ZipFile(archive, "r") as z:
       z.extractall(output_dir)
 
-    archive.unlink()
+    archive.unlink(missing_ok=True)
     print(f"Archive {filename} removed.")
 
   print(f"Done. Dataset available at: {output_dir}")
