@@ -32,13 +32,18 @@ module load miniconda3
 conda config --add envs_dirs /scratch/${USER}/conda/envs
 conda config --add pkgs_dirs /scratch/${USER}/conda/pkgs
 
-# Load py-torch module first so it is visible during env creation
-module load 2024r1 openmpi py-torch
-
 unset CONDA_SHLVL
 source "$(conda info --base)/etc/profile.d/conda.sh"
 
 conda env create -f environment_delftblue.yml -p /scratch/${USER}/conda/envs/surgical-action-recognition
+```
+
+Then install `timm` separately (must happen **after** the env is activated with `py-torch` loaded, so pip sees torch and doesn't re-download it):
+```bash
+module load 2024r1 openmpi py-torch
+conda activate /scratch/${USER}/conda/envs/surgical-action-recognition
+
+pip install timm==0.4.12 --no-deps
 ```
 
 ---

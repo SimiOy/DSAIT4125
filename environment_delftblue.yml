@@ -16,7 +16,6 @@ dependencies:
   - ffmpeg
   - pip:
       # Surgformer dependencies
-      - timm==0.4.12            # Surgformer uses this specific version
       - einops==0.6.1
       - decord==0.6.0           # fast video loading (Surgformer datasets)
       # PyTorch 1.x use deepspeed==0.9.5; PyTorch 2.x use deepspeed==0.14.0
