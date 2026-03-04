@@ -72,19 +72,13 @@ python scripts/download_cholec_80.py --output-dir /scratch/${USER}/data/Cholec80
 
 Run from the **project root** with the conda env active. All scripts are inside the `Surgformer/` submodule.
 
-**Step 1: Extract frames at 1 fps:**
-```bash
-python Surgformer/datasets/data_preprosses/extract_frames_ch80.py \
-    --data-dir data/Cholec80
-```
-
-**Step 2: Generate pickle label files** (train: videos 1–40, test: videos 41–80):
+**Step 1: Generate pickle label files** (train: videos 1–40, test: videos 41–80):
 ```bash
 python Surgformer/datasets/data_preprosses/generate_labels_ch80.py \
     --data-dir data/Cholec80
 ```
 
-**Step 3: Cut black margins**:
+**Step 2: Cut black margins**:
 ```bash
 python Surgformer/datasets/data_preprosses/frame_cutmargin.py \
     --source-path data/Cholec80/frames \
