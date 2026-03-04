@@ -3,15 +3,35 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9
+  - python=3.10
+  - pip
   - numpy
   - pandas
+  - scipy
   - scikit-learn
   - matplotlib
   - tqdm
   - pillow
-  - opencv
-  - pip
+  - pyyaml
   - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu117
+      - torch==1.13.1+cu117
+      - torchvision==0.14.1+cu117
+      - torchaudio==0.13.1
+      # Surgformer dependencies
+      - timm==0.4.12            # Surgformer uses this specific version
+      - einops==0.6.1
+      - decord==0.6.0           # fast video loading
+      - tensorboard
+      - tensorboardx
+      # EndoViT weight download
+      - huggingface-hub
+      - safetensors
+      # Dataset download scripts
       - synapseclient
       - requests
+      - wandb
+      - scikit-image
+      - imageio
+      - opencv-python
+      - imgaug
