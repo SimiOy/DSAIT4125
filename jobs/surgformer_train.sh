@@ -16,7 +16,7 @@ PROJECT_DIR="/scratch/${USER}/DSAIT4125"
 SURGFORMER_DIR="${PROJECT_DIR}/Surgformer"
 PRETRAIN_PATH="${PROJECT_DIR}/pretrain_params/timeSformer_divST_8x32_224_K400.pyth"   # TimeSformer K400 baseline
 DATA_PATH="/scratch/${USER}/data/Cholec80"
-NUM_GPUS=2
+NUM_GPUS=1
 
 # Optional settings:
 # Model: surgformer_base surgformer_HTA surgformer_HTA_KCA
