@@ -4,8 +4,8 @@
 #SBATCH --account=education-eemcs-courses-dsait4125
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gpus-per-task=2
-#SBATCH --mem-per-cpu=8G
+#SBATCH --gres=gpu:2
+#SBATCH --mem-per-cpu=5G
 #SBATCH --time=08:00:00
 #SBATCH --output=/scratch/%u/DSAIT4125/jobs/logs/%x.%j.out
 #SBATCH --error=/scratch/%u/DSAIT4125/jobs/logs/%x.%j.err
