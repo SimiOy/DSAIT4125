@@ -31,5 +31,5 @@ dependencies:
       - wandb
       - scikit-image
       - imageio
-      - opencv-python-headless
+      - opencv-python-headless==4.8.1.78
       - imgaug
