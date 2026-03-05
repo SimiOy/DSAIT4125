@@ -30,7 +30,7 @@ conda activate /scratch/${USER}/conda/envs/surgical-action-recognition
 
 cd "${SURGFORMER_DIR}"
 
-srun python -m torch.distributed.launch \
+srun torchrun \
     --nproc_per_node=${NUM_GPUS} \
     --master_port 12324 \
     downstream_phase/run_phase_training.py \
