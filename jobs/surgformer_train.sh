@@ -22,7 +22,7 @@ NUM_GPUS=2
 # Model: surgformer_base surgformer_HTA surgformer_HTA_KCA
 # Dataset: Cholec80 AutoLaparo
 
-module load 2024r1 openmpi py-torch cuda/11.6
+module load 2024r1 openmpi miniconda3 py-torch cuda/11.6
 
 unset CONDA_SHLVL
 source "$(conda info --base)/etc/profile.d/conda.sh"
