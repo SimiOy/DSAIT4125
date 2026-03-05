@@ -3,8 +3,8 @@
 #SBATCH --partition=gpu
 #SBATCH --account=education-eemcs-courses-dsait4125
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8       # Surgformer uses --num_workers 10; give headroom
-#SBATCH --gpus-per-task=2       # training script uses 2-3 GPUs; adjust as needed
+#SBATCH --cpus-per-task=8
+#SBATCH --gpus-per-task=2
 #SBATCH --mem-per-cpu=8G
 #SBATCH --time=08:00:00
 #SBATCH --output=/scratch/%u/DSAIT4125/jobs/logs/%x.%j.out
@@ -17,6 +17,10 @@ SURGFORMER_DIR="${PROJECT_DIR}/Surgformer"
 PRETRAIN_PATH="${PROJECT_DIR}/pretrain_params/timeSformer_divST_8x32_224_K400.pyth"   # TimeSformer K400 baseline
 DATA_PATH="/scratch/${USER}/data/Cholec80"
 NUM_GPUS=2
+
+# Optional settings:
+# Model: surgformer_base surgformer_HTA surgformer_HTA_KCA
+# Dataset: Cholec80 AutoLaparo
 
 module load 2024r1 openmpi py-torch cuda/11.6
 
