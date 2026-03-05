@@ -30,7 +30,11 @@ conda activate /scratch/${USER}/conda/envs/surgical-action-recognition
 
 cd "${SURGFORMER_DIR}"
 
-srun python downstream_phase/run_phase_training.py \
+# Unset SLURM rank vars so init_distributed_mode falls through to non-distributed path
+# (system py-torch has broken torch.distributed C++ extension)
+unset SLURM_PROCID SLURM_LOCALID SLURM_NTASKS SLURM_NODELIST
+
+python downstream_phase/run_phase_training.py \
     --batch_size 8 \
     --epochs 50 \
     --save_ckpt_freq 10 \
