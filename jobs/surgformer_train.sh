@@ -30,10 +30,7 @@ conda activate /scratch/${USER}/conda/envs/surgical-action-recognition
 
 cd "${SURGFORMER_DIR}"
 
-srun torchrun \
-    --nproc_per_node=${NUM_GPUS} \
-    --master_port 12324 \
-    downstream_phase/run_phase_training.py \
+srun python downstream_phase/run_phase_training.py \
     --batch_size 8 \
     --epochs 50 \
     --save_ckpt_freq 10 \
@@ -57,6 +54,4 @@ srun torchrun \
     --output_dir "${PROJECT_DIR}/results/Cholec80" \
     --log_dir "${PROJECT_DIR}/results/Cholec80" \
     --num_workers 8 \
-    --dist_eval \
-    --enable_deepspeed \
     --no_auto_resume
