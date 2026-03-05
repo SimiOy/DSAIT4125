@@ -48,6 +48,17 @@ pip install timm==0.4.12 --no-deps
 
 ---
 
+## Model Weights
+Download the baseline TimesFormer model weights (trained on K400) used by Surgformer:
+````bash
+cd pretrain_params
+
+wget -O timeSformer_divST_8x32_224_K400.pyth \
+    "https://www.dropbox.com/s/g5t24we9gl5yk88/TimeSformer_divST_8x32_224_K400.pyth?dl=1"
+```
+
+---
+
 ## Datasets
 
 All datasets are downloaded to `/scratch/$USER/datasets/` on the cluster. Credentials go in `.env` (copy from `.env.example`).
