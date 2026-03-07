@@ -31,7 +31,7 @@ conda activate /scratch/${USER}/conda/envs/surgical-action-recognition
 cd "${SURGFORMER_DIR}"
 
 PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
-    --batch_size 12 \
+    --batch_size 24 \
     --epochs 50 \
     --save_ckpt_freq 10 \
     --model surgformer_HTA_KCA \
