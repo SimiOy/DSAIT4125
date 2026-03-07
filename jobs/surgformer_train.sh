@@ -4,7 +4,7 @@
 #SBATCH --account=education-eemcs-courses-dsait4125
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gpus-per-task=1
+#SBATCH --gpus-per-task=2
 #SBATCH --mem-per-cpu=5G
 #SBATCH --time=08:00:00
 #SBATCH --output=/scratch/%u/DSAIT4125/jobs/logs/%x.%j.out
@@ -16,13 +16,13 @@ PROJECT_DIR="/scratch/${USER}/DSAIT4125"
 SURGFORMER_DIR="${PROJECT_DIR}/Surgformer"
 PRETRAIN_PATH="${PROJECT_DIR}/pretrain_params/timeSformer_divST_8x32_224_K400.pyth"   # TimeSformer K400 baseline
 DATA_PATH="/scratch/${USER}/data/Cholec80"
-NUM_GPUS=1
+NUM_GPUS=2
 
 # Optional settings:
 # Model: surgformer_base surgformer_HTA surgformer_HTA_KCA
 # Dataset: Cholec80 AutoLaparo
 
-module load 2024r1 openmpi miniconda3 py-torch cuda/11.6
+module load 2024r1 openmpi miniconda3 cuda/11.6
 
 unset CONDA_SHLVL
 source "$(conda info --base)/etc/profile.d/conda.sh"
@@ -30,12 +30,8 @@ conda activate /scratch/${USER}/conda/envs/surgical-action-recognition
 
 cd "${SURGFORMER_DIR}"
 
-# Unset SLURM rank vars so init_distributed_mode falls through to non-distributed path
-# (system py-torch has broken torch.distributed C++ extension)
-unset SLURM_PROCID SLURM_LOCALID SLURM_NTASKS SLURM_NODELIST
-
-PYTHONUNBUFFERED=1 python -u downstream_phase/run_phase_training.py \
-    --batch_size 24 \
+PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
+    --batch_size 12 \
     --epochs 50 \
     --save_ckpt_freq 10 \
     --model surgformer_HTA_KCA \
