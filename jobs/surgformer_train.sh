@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=surgformer-train
-#SBATCH --partition=gpu
+#SBATCH --partition=gpu-a100
 #SBATCH --account=education-eemcs-courses-dsait4125
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
@@ -41,7 +41,7 @@ export NCCL_SOCKET_IFNAME=lo
 export NCCL_P2P_DISABLE=0
 
 PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
-    --batch_size 12 \
+    --batch_size 24 \
     --epochs 50 \
     --save_ckpt_freq 10 \
     --model surgformer_HTA_KCA \
