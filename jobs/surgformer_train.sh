@@ -34,8 +34,8 @@ cd "${SURGFORMER_DIR}"
 # (system py-torch has broken torch.distributed C++ extension)
 unset SLURM_PROCID SLURM_LOCALID SLURM_NTASKS SLURM_NODELIST
 
-python downstream_phase/run_phase_training.py \
-    --batch_size 8 \
+PYTHONUNBUFFERED=1 python -u downstream_phase/run_phase_training.py \
+    --batch_size 24 \
     --epochs 50 \
     --save_ckpt_freq 10 \
     --model surgformer_HTA_KCA \

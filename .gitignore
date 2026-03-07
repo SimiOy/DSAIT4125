@@ -30,3 +30,5 @@ data/*
 # SLURM job logs
 jobs/logs/*.out
 jobs/logs/*.err
+
+pretrain_params/
