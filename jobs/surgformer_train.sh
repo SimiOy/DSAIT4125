@@ -28,6 +28,9 @@ unset CONDA_SHLVL
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate /scratch/${USER}/conda/envs/surgical-action-recognition
 
+# provides GLIBCXX_3.4.30+
+export LD_LIBRARY_PATH="${CONDA_PREFIX}/lib:${LD_LIBRARY_PATH:-}"
+
 cd "${SURGFORMER_DIR}"
 
 PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
