@@ -33,6 +33,13 @@ export LD_LIBRARY_PATH="${CONDA_PREFIX}/lib:${LD_LIBRARY_PATH:-}"
 
 cd "${SURGFORMER_DIR}"
 
+unset SLURM_PROCID SLURM_LOCALID SLURM_NTASKS SLURM_NODELIST
+
+# Speed up NCCL init on single-node multi-GPU (skip InfiniBand/network scanning)
+export NCCL_IB_DISABLE=1
+export NCCL_SOCKET_IFNAME=lo
+export NCCL_P2P_DISABLE=0
+
 PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
     --batch_size 24 \
     --epochs 50 \
