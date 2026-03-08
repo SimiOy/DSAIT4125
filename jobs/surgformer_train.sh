@@ -65,4 +65,5 @@ PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_ph
     --log_dir "${PROJECT_DIR}/results/Cholec80" \
     --num_workers 4 \
     --clip_grad 1.0 \
-    --no_auto_resume
+    --no_auto_resume \
+    --cut_black
