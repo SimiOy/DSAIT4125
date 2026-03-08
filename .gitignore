@@ -26,3 +26,7 @@ cython_debug/
 # Data files (downloaded datasets)
 data/*
 !data/.gitkeep
+
+# SLURM job logs
+jobs/logs/*.out
+jobs/logs/*.err
