@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --gpus-per-task=2
-#SBATCH --mem-per-cpu=8G
+#SBATCH --mem-per-cpu=6G
 #SBATCH --time=24:00:00
 #SBATCH --output=/scratch/%u/DSAIT4125/jobs/logs/%x.%j.out
 #SBATCH --error=/scratch/%u/DSAIT4125/jobs/logs/%x.%j.err
