@@ -5,23 +5,25 @@ channels:
 dependencies:
   - python=3.10
   - pip
-  - numpy
+  - numpy<2
+  - libstdcxx-ng
   - pandas
-  - scipy
+  - scipy=1.10.1
   - scikit-learn
   - matplotlib
   - tqdm
   - pillow
   - pyyaml
+  - ffmpeg
   - pip:
-      - --extra-index-url https://download.pytorch.org/whl/cu117
-      - torch==1.13.1+cu117
-      - torchvision==0.14.1+cu117
-      - torchaudio==0.13.1
+      - --extra-index-url https://download.pytorch.org/whl/cu116
+      - torch==1.13.1+cu116
+      - torchvision==0.14.1+cu116
       # Surgformer dependencies
-      - timm==0.4.12            # Surgformer uses this specific version
       - einops==0.6.1
-      - decord==0.6.0           # fast video loading
+      - decord==0.6.0           # fast video loading (Surgformer datasets)
+      # PyTorch 1.x use deepspeed==0.9.5; PyTorch 2.x use deepspeed==0.14.0
+      - deepspeed==0.9.5
       - tensorboard
       - tensorboardx
       # EndoViT weight download
@@ -33,5 +35,5 @@ dependencies:
       - wandb
       - scikit-image
       - imageio
-      - opencv-python
+      - opencv-python-headless==4.8.1.78
       - imgaug
