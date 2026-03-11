@@ -10,7 +10,7 @@ DATA_DIR = PROJECT_ROOT / "data" / "MultiBypass140"
 
 BASE_URL = "https://s3.unistra.fr/camma_public/datasets/MultiBypass140"
 PARTS = [
-    # "multibypass01_corrected.zip",
+    "multibypass01_corrected.zip",
     "multibypass02.zip",
     "multibypass03.zip",
     "multibypass04.zip",
