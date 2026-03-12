@@ -13,18 +13,15 @@ def filter_black(image):
     _, binary = cv2.threshold(binary, 15, 255, cv2.THRESH_BINARY)
     binary = cv2.medianBlur(binary, 19)
 
-    edges_x, edges_y = [], []
-    for i in range(binary.shape[0]):
-        for j in range(10, binary.shape[1] - 10):
-            if binary.item(i, j) != 0:
-                edges_x.append(i)
-                edges_y.append(j)
+    # Ignore 10px border columns, then find nonzero pixel coordinates with numpy
+    mask = binary[:, 10:-10]
+    rows, cols = np.where(mask != 0)
 
-    if not edges_x:
+    if rows.size == 0:
         return None
 
-    left, right = min(edges_x), max(edges_x)
-    bottom, top = min(edges_y), max(edges_y)
+    left, right = int(rows.min()), int(rows.max())
+    bottom, top  = int(cols.min()) + 10, int(cols.max()) + 10  # adjust back for stripped columns
     w, h = right - left, top - bottom
     if w <= 0 or h <= 0:
         return None
