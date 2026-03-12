@@ -59,10 +59,10 @@ def extract_video(video_path, video_id, output_dir):
     with h5py.File(out_path, "w") as f:
         ds_raw = f.create_dataset("frames",           shape=(0, H, W, 3),
                                   maxshape=(None, H, W, 3),
-                                  dtype="uint8", chunks=(1, H, W, 3), compression="lzf")
+                                  dtype="uint8", chunks=(1, H, W, 3), compression="gzip", compression_opts=1)
         ds_cut = f.create_dataset("frames_cutmargin", shape=(0, 250, 250, 3),
                                   maxshape=(None, 250, 250, 3),
-                                  dtype="uint8", chunks=(1, 250, 250, 3), compression="lzf")
+                                  dtype="uint8", chunks=(1, 250, 250, 3), compression="gzip", compression_opts=1)
 
         def write_frame(image, idx):
             ds_raw.resize(idx + 1, axis=0)
