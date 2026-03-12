@@ -1,6 +1,7 @@
 import os
 import pickle
 import argparse
+import h5py
 from tqdm import tqdm
 
 
@@ -28,7 +29,7 @@ def load_annotation(ann_path):
     return phase_dict
 
 
-def build_split(split_dir, pattern, video_ids, frames_dir):
+def build_split(split_dir, pattern, video_ids, hdf5_dir):
     """Build the pickle dict for one split.
 
     Returns (pkl_dict, total_frames_count).
@@ -45,16 +46,16 @@ def build_split(split_dir, pattern, video_ids, frames_dir):
             print(f"  MISSING annotation: {ann_path}")
             continue
 
-        video_frames_dir = os.path.join(frames_dir, video_id)
-        if not os.path.isdir(video_frames_dir):
-            print(f"  MISSING frames dir: {video_frames_dir} — skipping")
+        hdf5_path = os.path.join(hdf5_dir, video_id + ".h5")
+        if not os.path.exists(hdf5_path):
+            print(f"  MISSING HDF5: {hdf5_path} - skipping")
             continue
 
-        # Count actual extracted frames (source of truth)
-        frame_files = sorted(f for f in os.listdir(video_frames_dir) if f.endswith('.png'))
-        actual_frame_count = len(frame_files)
+        # Frame count comes from the HDF5 file (source of truth)
+        with h5py.File(hdf5_path, "r") as hf:
+            actual_frame_count = hf["frames"].shape[0]
         if actual_frame_count == 0:
-            print(f"  WARNING: no frames found in {video_frames_dir}")
+            print(f"  WARNING: no frames in {hdf5_path}")
             continue
 
         phase_dict = load_annotation(ann_path)
@@ -94,14 +95,14 @@ def main():
                         help="Root M2CAI16 directory")
     args = parser.parse_args()
 
-    frames_dir = os.path.join(args.data_dir, "frames")
+    hdf5_dir = os.path.join(args.data_dir, "frames_hdf5")
 
     print("=== Building TRAIN pickle ===")
     train_pkl, n_train = build_split(
         split_dir=os.path.join(args.data_dir, "train_dataset"),
         pattern="workflow_video_{:02d}.txt",
         video_ids=range(1, 28),
-        frames_dir=frames_dir,
+        hdf5_dir=hdf5_dir,
     )
 
     print("\n=== Building TEST pickle ===")
@@ -109,7 +110,7 @@ def main():
         split_dir=os.path.join(args.data_dir, "test_dataset"),
         pattern="test_workflow_video_{:02d}.txt",
         video_ids=range(1, 15),
-        frames_dir=frames_dir,
+        hdf5_dir=hdf5_dir,
     )
 
     train_out = os.path.join(args.data_dir, "labels", "train")

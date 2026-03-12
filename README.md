@@ -112,17 +112,12 @@ python scripts/download_m2cai16.py \
 
 Run from the **project root** with the conda env active.
 
-**Step 1: Extract 1fps frames** from all 41 videos (train + test):
+**Step 1: Extract 1fps frames into HDF5** (raw + cutmargin both stored per video, one `.h5` file each):
 ```bash
 python scripts/extract_frames_m2cai16.py --data-dir /scratch/${USER}/data/m2cai16
 ```
 
-**Step 2: Cut black margins**:
-```bash
-python Surgformer/datasets/data_preprosses/frame_cutmargin.py --source-path /scratch/${USER}/data/m2cai16/frames --save-path   /scratch/${USER}/data/m2cai16/frames_cutmargin
-```
-
-**Step 3: Generate pickle label files**:
+**Step 2: Generate pickle label files**:
 ```bash
 python scripts/generate_labels_m2cai16.py --data-dir /scratch/${USER}/data/m2cai16
 ```
