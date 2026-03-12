@@ -14,7 +14,8 @@ set -euo pipefail
 
 PROJECT_DIR="/scratch/${USER}/DSAIT4125"
 SURGFORMER_DIR="${PROJECT_DIR}/Surgformer"
-CHECKPOINT_PATH="${PROJECT_DIR}/results/Cholec80/checkpoint-best.pth"
+RUN_DIR="${PROJECT_DIR}/results/Cholec80/surgformer_HTA_KCA_Cholec80_0.0005_0.75_online_key_frame_frame16_Fixed_Stride_4"
+CHECKPOINT_PATH="${RUN_DIR}/checkpoint-best.pth"
 DATA_PATH="/scratch/${USER}/data/Cholec80"
 NUM_GPUS=1
 
@@ -48,8 +49,8 @@ PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_ph
     --sampling_rate 4 \
     --data_set Cholec80 \
     --data_fps 1fps \
-    --output_dir "${PROJECT_DIR}/results/Cholec80" \
-    --log_dir "${PROJECT_DIR}/results/Cholec80" \
+    --output_dir "${RUN_DIR}" \
+    --log_dir "${RUN_DIR}" \
     --num_workers 4 \
     --eval \
     --resume "${CHECKPOINT_PATH}" \
