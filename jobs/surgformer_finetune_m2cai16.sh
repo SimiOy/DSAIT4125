@@ -21,7 +21,7 @@ CHOLEC80_CKPT="${PROJECT_DIR}/results/Cholec80/surgformer_HTA_KCA_Cholec80_image
 DATA_PATH="/scratch/${USER}/data/m2cai16"
 NUM_GPUS=2
 
-module load 2024r1 openmpi miniconda3 cuda/11.6
+module load 2024r1 miniconda3 cuda/11.6
 
 unset CONDA_SHLVL
 source "$(conda info --base)/etc/profile.d/conda.sh"
