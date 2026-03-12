@@ -4,7 +4,7 @@
 #SBATCH --account=education-eemcs-courses-dsait4125
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gpus-per-task=2
+#SBATCH --gpus-per-task=1
 #SBATCH --mem-per-cpu=6G
 #SBATCH --time=4:00:00
 #SBATCH --output=/scratch/%u/DSAIT4125/jobs/logs/%x.%j.out
@@ -16,7 +16,7 @@ PROJECT_DIR="/scratch/${USER}/DSAIT4125"
 SURGFORMER_DIR="${PROJECT_DIR}/Surgformer"
 CHECKPOINT_PATH="${PROJECT_DIR}/results/Cholec80/checkpoint-best.pth"
 DATA_PATH="/scratch/${USER}/data/Cholec80"
-NUM_GPUS=2
+NUM_GPUS=1
 
 module load 2024r1 openmpi miniconda3 cuda/11.6
 
@@ -37,7 +37,7 @@ export NCCL_SOCKET_IFNAME=lo
 export NCCL_P2P_DISABLE=0
 
 PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
-    --batch_size 24 \
+    --batch_size 32 \
     --model surgformer_HTA_KCA \
     --data_path "${DATA_PATH}" \
     --eval_data_path "${DATA_PATH}" \
@@ -53,6 +53,5 @@ PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_ph
     --num_workers 4 \
     --eval \
     --resume "${CHECKPOINT_PATH}" \
-    --dist_eval \
     --no_auto_resume \
     --cut_black
