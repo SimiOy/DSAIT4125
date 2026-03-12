@@ -49,29 +49,47 @@ def extract_video(video_path, video_id, output_dir):
     if abs(fps - 25) > 0.5:
         print(f"WARNING {video_id}: expected 25 fps, got {fps:.2f}")
 
-    raw_frames = []
-    cut_frames = []
-    count = 0
-    success = True
-    while success:
-        success, image = vidcap.read()
-        if success and count % round(fps) == 0:
-            # BGR -> RGB for storage (matches PIL.Image.open convention used at train time)
-            rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            raw_frames.append(rgb)
-            cut = process_cutmargin(image)
-            cut_frames.append(cv2.cvtColor(cut, cv2.COLOR_BGR2RGB))
-        count += 1
-    vidcap.release()
-
-    raw_arr = np.stack(raw_frames).astype(np.uint8)     # (N, H, W, 3)
-    cut_arr = np.stack(cut_frames).astype(np.uint8)     # (N, 250, 250, 3)
+    success, first = vidcap.read()
+    if not success:
+        vidcap.release()
+        print(f"ERROR {video_id}: could not read first frame")
+        return
+    H, W = first.shape[:2]
 
     with h5py.File(out_path, "w") as f:
-        f.create_dataset("frames",           data=raw_arr, compression="lzf")
-        f.create_dataset("frames_cutmargin", data=cut_arr, compression="lzf")
+        ds_raw = f.create_dataset("frames",           shape=(0, H, W, 3),
+                                  maxshape=(None, H, W, 3),
+                                  dtype="uint8", chunks=(1, H, W, 3), compression="lzf")
+        ds_cut = f.create_dataset("frames_cutmargin", shape=(0, 250, 250, 3),
+                                  maxshape=(None, 250, 250, 3),
+                                  dtype="uint8", chunks=(1, 250, 250, 3), compression="lzf")
 
-    print(f"{video_id}: {len(raw_frames)} frames → {out_path}")
+        def write_frame(image, idx):
+            ds_raw.resize(idx + 1, axis=0)
+            ds_raw[idx] = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            ds_cut.resize(idx + 1, axis=0)
+            ds_cut[idx] = cv2.cvtColor(process_cutmargin(image), cv2.COLOR_BGR2RGB)
+
+        frame_idx = 0
+        count = 0
+        step = round(fps)
+
+        if count % step == 0:      # first frame already read
+            write_frame(first, frame_idx)
+            frame_idx += 1
+        count += 1
+
+        while True:
+            success, image = vidcap.read()
+            if not success:
+                break
+            if count % step == 0:
+                write_frame(image, frame_idx)
+                frame_idx += 1
+            count += 1
+
+    vidcap.release()
+    print(f"{video_id}: {frame_idx} frames → {out_path}")
 
 
 def main():
