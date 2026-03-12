@@ -30,7 +30,7 @@ fi
 
 CHECKPOINT_PATH="${RUN_DIR}/checkpoint-best.pth"
 
-module load 2024r1 openmpi miniconda3 cuda/11.6
+module load 2024r1 miniconda3 cuda/11.6
 
 unset CONDA_SHLVL
 source "$(conda info --base)/etc/profile.d/conda.sh"
