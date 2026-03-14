@@ -20,6 +20,7 @@ CHOLEC80_CKPT="${PROJECT_DIR}/results/Cholec80/surgformer_HTA_KCA_Cholec80_image
 
 DATA_PATH="/scratch/${USER}/data/m2cai16"
 NUM_GPUS=2
+TRAIN_FRACTION=1.0
 
 module load 2024r1 miniconda3 cuda/11.6
 
@@ -64,4 +65,5 @@ PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_ph
     --num_workers 4 \
     --clip_grad 1.0 \
     --auto_resume \
-    --cut_black
+    --cut_black \
+    --train_fraction ${TRAIN_FRACTION}
