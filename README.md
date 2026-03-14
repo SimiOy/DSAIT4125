@@ -50,7 +50,7 @@ pip install timm==0.4.12 --no-deps
 
 ## Model Weights
 Download the baseline TimesFormer model weights (trained on K400) used by Surgformer:
-````bash
+```bash
 cd pretrain_params
 
 wget -O timeSformer_divST_8x32_224_K400.pyth \
@@ -90,10 +90,48 @@ python Surgformer/datasets/data_preprosses/generate_labels_ch80.py \
 ```
 
 **Step 2: Cut black margins**:
+
 ```bash
 python Surgformer/datasets/data_preprosses/frame_cutmargin.py \
     --source-path data/Cholec80/frames \
     --save-path data/Cholec80/frames_cutmargin
+```
+
+---
+
+### m2cai16-workflow
+
+41 cholecystectomy videos (27 train / 14 test) with surgical workflow annotations from University Hospital of Strasbourg and Klinikum Rechts der Isar. No account required - direct download.
+
+```bash
+python scripts/download_m2cai16.py \
+    --output-dir /scratch/${USER}/data/m2cai16
+```
+
+#### Preparing M2CAI16 for Surgformer
+
+Run from the **project root** with the conda env active.
+
+**Step 1: Extract 1fps frames into HDF5** (raw + cutmargin both stored per video, one `.h5` file each):
+```bash
+python scripts/extract_frames_m2cai16.py --data-dir /scratch/${USER}/data/m2cai16
+```
+
+**Step 2: Generate pickle label files**:
+```bash
+python scripts/generate_labels_m2cai16.py --data-dir /scratch/${USER}/data/m2cai16
+```
+
+#### Finetuning from Cholec80 checkpoint
+
+```bash
+sbatch jobs/surgformer_finetune_m2cai16.sh
+```
+
+#### Evaluation
+
+```bash
+DATASET=M2CAI16 sbatch jobs/surgformer_eval.sh
 ```
 
 ---
@@ -158,16 +196,6 @@ python scripts/download_endoscapes.py \
 
 ---
 
-### m2cai16-workflow
-
-41 cholecystectomy videos (27 train / 14 test) with surgical workflow annotations from University Hospital of Strasbourg and Klinikum Rechts der Isar. No account required - direct download.
-
-```bash
-python scripts/download_m2cai16.py \
-    --output-dir /scratch/${USER}/datasets/m2cai16
-```
-
----
 
 ### AutoLaparo
 
