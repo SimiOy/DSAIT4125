@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=surgformer-ft-m2cai16
+#SBATCH --job-name=surgformer-ft-m2cai16-0.25
 #SBATCH --partition=gpu-a100
 #SBATCH --account=education-eemcs-courses-dsait4125
 #SBATCH --ntasks=1
@@ -21,7 +21,8 @@ CHOLEC80_CKPT="${PROJECT_DIR}/results/Cholec80/surgformer_HTA_KCA_Cholec80_0.000
 
 DATA_PATH="/scratch/${USER}/data/m2cai16"
 NUM_GPUS=2
-TRAIN_FRACTION=1.0
+TRAIN_FRACTION=0.25
+OUTPUT_DIR="${PROJECT_DIR}/results/M2CAI16_frac_${TRAIN_FRACTION}"
 
 module load 2024r1 miniconda3 cuda/11.6
 
@@ -61,10 +62,9 @@ PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_ph
     --sampling_rate 4 \
     --data_set M2CAI16 \
     --data_fps 1fps \
-    --output_dir "${PROJECT_DIR}/results/M2CAI16" \
-    --log_dir "${PROJECT_DIR}/results/M2CAI16" \
+    --output_dir "${OUTPUT_DIR}" \
+    --log_dir "${OUTPUT_DIR}" \
     --num_workers 4 \
     --clip_grad 1.0 \
-    --auto_resume \
     --cut_black \
     --train_fraction ${TRAIN_FRACTION}
