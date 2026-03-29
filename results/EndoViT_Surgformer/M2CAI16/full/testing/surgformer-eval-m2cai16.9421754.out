@@ -1,0 +1,609 @@
+===========    ===========      Init DistributionInit Distribution      ===========    ===========
+
+| distributed init (rank 0): env://, gpu 0
+| distributed init (rank 1): env://, gpu 1
+Namespace(batch_size=24, epochs=50, update_freq=1, save_ckpt_freq=10, model='surgformer_HTA_KCA', pretrained_path='', input_size=224, fc_drop_rate=0.5, drop=0.0, attn_drop_rate=0.0, drop_path=0.1, disable_eval_during_finetuning=False, opt='adamw', opt_eps=1e-08, opt_betas=(0.9, 0.999), clip_grad=None, momentum=0.9, weight_decay=0.05, weight_decay_end=None, lr=0.0005, layer_decay=0.75, warmup_lr=1e-06, min_lr=1e-06, warmup_epochs=5, warmup_steps=-1, color_jitter=0.4, aa='rand-m7-n4-mstd0.5-inc1', smoothing=0.1, train_interpolation='bicubic', crop_pct=None, short_side_size=224, reprob=0.25, remode='pixel', recount=1, resplit=False, mixup=0.8, cutmix=1.0, cutmix_minmax=None, mixup_prob=1.0, mixup_switch_prob=0.5, mixup_mode='batch', finetune='/scratch/tnvdinh/DSAIT4125/results/M2CAI16/surgformer_HTA_KCA_M2CAI16_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4/checkpoint-best.pth', model_key='model|module', model_prefix='', data_path='/scratch/tnvdinh/data/m2cai16', eval_data_path='/scratch/tnvdinh/data/m2cai16', nb_classes=8, imagenet_default_mean_and_std=True, data_strategy='online', output_mode='key_frame', cut_black=True, num_frames=16, sampling_rate=4, data_set='M2CAI16', data_fps='1fps', output_dir='/scratch/tnvdinh/DSAIT4125/results/M2CAI16', log_dir='/scratch/tnvdinh/DSAIT4125/results/M2CAI16', device='cuda', seed=0, resume='', auto_resume=False, save_ckpt=True, start_epoch=0, eval=True, dist_eval=False, num_workers=4, train_fraction=1.0, pin_mem=True, world_size=2, local_rank=-1, dist_on_itp=False, dist_url='env://', enable_deepspeed=False, rank=0, gpu=0, distributed=True, dist_backend='nccl')
+train - 1fps : Number of the class = 8
+Data Strategy: online
+Output Mode: key_frame
+Cut Black: True
+16 Frames with Temporal sample Rate 4
+test - 1fps : Number of the class = 8
+Data Strategy: online
+Output Mode: key_frame
+Cut Black: True
+16 Frames with Temporal sample Rate 4
+test - 1fps : Number of the class = 8
+Data Strategy: online
+Output Mode: key_frame
+Cut Black: True
+16 Frames with Temporal sample Rate 4
+Train Dataset Length:  67577
+Val Dataset Length:  26961
+Test Dataset Length:  26961
+Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x1554b479fd90>
+Sequential Sampler For Val/Test
+Log dir: /scratch/tnvdinh/DSAIT4125/results/M2CAI16/surgformer_HTA_KCA_M2CAI16_0.0005_0.75_online_key_frame_frame16_Fixed_Stride_4/log
+Mixup is activated!
+Patch size = (16, 16)
+Window size: = (16, 14, 14)
+Load ckpt from /scratch/tnvdinh/DSAIT4125/results/M2CAI16/surgformer_HTA_KCA_M2CAI16_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4/checkpoint-best.pth
+Load state_dict by model_key = model
+number of params: 177986312
+LR = 0.00037500
+Batch size = 48
+Update frequent = 1
+Number of training examples = 67577
+Number of training training per epoch = 1407
+Assigned values = [0.023757264018058777, 0.03167635202407837, 0.04223513603210449, 0.056313514709472656, 0.07508468627929688, 0.1001129150390625, 0.13348388671875, 0.177978515625, 0.2373046875, 0.31640625, 0.421875, 0.5625, 0.75, 1.0]
+Skip weight decay list:  {'cls_token', 'pos_embed', 'time_embed'}
+Param groups = {
+  "layer_0_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "cls_token",
+      "pos_embed",
+      "time_embed",
+      "patch_embed.proj.bias"
+    ],
+    "lr_scale": 0.023757264018058777
+  },
+  "layer_0_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "patch_embed.proj.weight"
+    ],
+    "lr_scale": 0.023757264018058777
+  },
+  "layer_1_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.0.norm1.weight",
+      "blocks.0.norm1.bias",
+      "blocks.0.attn.qkv.bias",
+      "blocks.0.attn.proj.bias",
+      "blocks.0.temporal_norm1.weight",
+      "blocks.0.temporal_norm1.bias",
+      "blocks.0.temporal_attn.qkv_4.bias",
+      "blocks.0.temporal_attn.qkv_8.bias",
+      "blocks.0.temporal_attn.qkv_16.bias",
+      "blocks.0.temporal_attn.proj_4.bias",
+      "blocks.0.temporal_attn.proj_8.bias",
+      "blocks.0.temporal_attn.proj_16.bias",
+      "blocks.0.temporal_fc.bias",
+      "blocks.0.norm2.weight",
+      "blocks.0.norm2.bias",
+      "blocks.0.mlp.fc1.bias",
+      "blocks.0.mlp.fc2.bias",
+      "blocks.0.norm_cls.weight",
+      "blocks.0.norm_cls.bias"
+    ],
+    "lr_scale": 0.03167635202407837
+  },
+  "layer_1_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.0.attn.qkv.weight",
+      "blocks.0.attn.proj.weight",
+      "blocks.0.temporal_attn.qkv_4.weight",
+      "blocks.0.temporal_attn.qkv_8.weight",
+      "blocks.0.temporal_attn.qkv_16.weight",
+      "blocks.0.temporal_attn.proj_4.weight",
+      "blocks.0.temporal_attn.proj_8.weight",
+      "blocks.0.temporal_attn.proj_16.weight",
+      "blocks.0.temporal_fc.weight",
+      "blocks.0.mlp.fc1.weight",
+      "blocks.0.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.03167635202407837
+  },
+  "layer_2_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.1.norm1.weight",
+      "blocks.1.norm1.bias",
+      "blocks.1.attn.qkv.bias",
+      "blocks.1.attn.proj.bias",
+      "blocks.1.temporal_norm1.weight",
+      "blocks.1.temporal_norm1.bias",
+      "blocks.1.temporal_attn.qkv_4.bias",
+      "blocks.1.temporal_attn.qkv_8.bias",
+      "blocks.1.temporal_attn.qkv_16.bias",
+      "blocks.1.temporal_attn.proj_4.bias",
+      "blocks.1.temporal_attn.proj_8.bias",
+      "blocks.1.temporal_attn.proj_16.bias",
+      "blocks.1.temporal_fc.bias",
+      "blocks.1.norm2.weight",
+      "blocks.1.norm2.bias",
+      "blocks.1.mlp.fc1.bias",
+      "blocks.1.mlp.fc2.bias",
+      "blocks.1.norm_cls.weight",
+      "blocks.1.norm_cls.bias"
+    ],
+    "lr_scale": 0.04223513603210449
+  },
+  "layer_2_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.1.attn.qkv.weight",
+      "blocks.1.attn.proj.weight",
+      "blocks.1.temporal_attn.qkv_4.weight",
+      "blocks.1.temporal_attn.qkv_8.weight",
+      "blocks.1.temporal_attn.qkv_16.weight",
+      "blocks.1.temporal_attn.proj_4.weight",
+      "blocks.1.temporal_attn.proj_8.weight",
+      "blocks.1.temporal_attn.proj_16.weight",
+      "blocks.1.temporal_fc.weight",
+      "blocks.1.mlp.fc1.weight",
+      "blocks.1.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.04223513603210449
+  },
+  "layer_3_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.2.norm1.weight",
+      "blocks.2.norm1.bias",
+      "blocks.2.attn.qkv.bias",
+      "blocks.2.attn.proj.bias",
+      "blocks.2.temporal_norm1.weight",
+      "blocks.2.temporal_norm1.bias",
+      "blocks.2.temporal_attn.qkv_4.bias",
+      "blocks.2.temporal_attn.qkv_8.bias",
+      "blocks.2.temporal_attn.qkv_16.bias",
+      "blocks.2.temporal_attn.proj_4.bias",
+      "blocks.2.temporal_attn.proj_8.bias",
+      "blocks.2.temporal_attn.proj_16.bias",
+      "blocks.2.temporal_fc.bias",
+      "blocks.2.norm2.weight",
+      "blocks.2.norm2.bias",
+      "blocks.2.mlp.fc1.bias",
+      "blocks.2.mlp.fc2.bias",
+      "blocks.2.norm_cls.weight",
+      "blocks.2.norm_cls.bias"
+    ],
+    "lr_scale": 0.056313514709472656
+  },
+  "layer_3_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.2.attn.qkv.weight",
+      "blocks.2.attn.proj.weight",
+      "blocks.2.temporal_attn.qkv_4.weight",
+      "blocks.2.temporal_attn.qkv_8.weight",
+      "blocks.2.temporal_attn.qkv_16.weight",
+      "blocks.2.temporal_attn.proj_4.weight",
+      "blocks.2.temporal_attn.proj_8.weight",
+      "blocks.2.temporal_attn.proj_16.weight",
+      "blocks.2.temporal_fc.weight",
+      "blocks.2.mlp.fc1.weight",
+      "blocks.2.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.056313514709472656
+  },
+  "layer_4_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.3.norm1.weight",
+      "blocks.3.norm1.bias",
+      "blocks.3.attn.qkv.bias",
+      "blocks.3.attn.proj.bias",
+      "blocks.3.temporal_norm1.weight",
+      "blocks.3.temporal_norm1.bias",
+      "blocks.3.temporal_attn.qkv_4.bias",
+      "blocks.3.temporal_attn.qkv_8.bias",
+      "blocks.3.temporal_attn.qkv_16.bias",
+      "blocks.3.temporal_attn.proj_4.bias",
+      "blocks.3.temporal_attn.proj_8.bias",
+      "blocks.3.temporal_attn.proj_16.bias",
+      "blocks.3.temporal_fc.bias",
+      "blocks.3.norm2.weight",
+      "blocks.3.norm2.bias",
+      "blocks.3.mlp.fc1.bias",
+      "blocks.3.mlp.fc2.bias",
+      "blocks.3.norm_cls.weight",
+      "blocks.3.norm_cls.bias"
+    ],
+    "lr_scale": 0.07508468627929688
+  },
+  "layer_4_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.3.attn.qkv.weight",
+      "blocks.3.attn.proj.weight",
+      "blocks.3.temporal_attn.qkv_4.weight",
+      "blocks.3.temporal_attn.qkv_8.weight",
+      "blocks.3.temporal_attn.qkv_16.weight",
+      "blocks.3.temporal_attn.proj_4.weight",
+      "blocks.3.temporal_attn.proj_8.weight",
+      "blocks.3.temporal_attn.proj_16.weight",
+      "blocks.3.temporal_fc.weight",
+      "blocks.3.mlp.fc1.weight",
+      "blocks.3.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.07508468627929688
+  },
+  "layer_5_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.4.norm1.weight",
+      "blocks.4.norm1.bias",
+      "blocks.4.attn.qkv.bias",
+      "blocks.4.attn.proj.bias",
+      "blocks.4.temporal_norm1.weight",
+      "blocks.4.temporal_norm1.bias",
+      "blocks.4.temporal_attn.qkv_4.bias",
+      "blocks.4.temporal_attn.qkv_8.bias",
+      "blocks.4.temporal_attn.qkv_16.bias",
+      "blocks.4.temporal_attn.proj_4.bias",
+      "blocks.4.temporal_attn.proj_8.bias",
+      "blocks.4.temporal_attn.proj_16.bias",
+      "blocks.4.temporal_fc.bias",
+      "blocks.4.norm2.weight",
+      "blocks.4.norm2.bias",
+      "blocks.4.mlp.fc1.bias",
+      "blocks.4.mlp.fc2.bias",
+      "blocks.4.norm_cls.weight",
+      "blocks.4.norm_cls.bias"
+    ],
+    "lr_scale": 0.1001129150390625
+  },
+  "layer_5_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.4.attn.qkv.weight",
+      "blocks.4.attn.proj.weight",
+      "blocks.4.temporal_attn.qkv_4.weight",
+      "blocks.4.temporal_attn.qkv_8.weight",
+      "blocks.4.temporal_attn.qkv_16.weight",
+      "blocks.4.temporal_attn.proj_4.weight",
+      "blocks.4.temporal_attn.proj_8.weight",
+      "blocks.4.temporal_attn.proj_16.weight",
+      "blocks.4.temporal_fc.weight",
+      "blocks.4.mlp.fc1.weight",
+      "blocks.4.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.1001129150390625
+  },
+  "layer_6_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.5.norm1.weight",
+      "blocks.5.norm1.bias",
+      "blocks.5.attn.qkv.bias",
+      "blocks.5.attn.proj.bias",
+      "blocks.5.temporal_norm1.weight",
+      "blocks.5.temporal_norm1.bias",
+      "blocks.5.temporal_attn.qkv_4.bias",
+      "blocks.5.temporal_attn.qkv_8.bias",
+      "blocks.5.temporal_attn.qkv_16.bias",
+      "blocks.5.temporal_attn.proj_4.bias",
+      "blocks.5.temporal_attn.proj_8.bias",
+      "blocks.5.temporal_attn.proj_16.bias",
+      "blocks.5.temporal_fc.bias",
+      "blocks.5.norm2.weight",
+      "blocks.5.norm2.bias",
+      "blocks.5.mlp.fc1.bias",
+      "blocks.5.mlp.fc2.bias",
+      "blocks.5.norm_cls.weight",
+      "blocks.5.norm_cls.bias"
+    ],
+    "lr_scale": 0.13348388671875
+  },
+  "layer_6_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.5.attn.qkv.weight",
+      "blocks.5.attn.proj.weight",
+      "blocks.5.temporal_attn.qkv_4.weight",
+      "blocks.5.temporal_attn.qkv_8.weight",
+      "blocks.5.temporal_attn.qkv_16.weight",
+      "blocks.5.temporal_attn.proj_4.weight",
+      "blocks.5.temporal_attn.proj_8.weight",
+      "blocks.5.temporal_attn.proj_16.weight",
+      "blocks.5.temporal_fc.weight",
+      "blocks.5.mlp.fc1.weight",
+      "blocks.5.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.13348388671875
+  },
+  "layer_7_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.6.norm1.weight",
+      "blocks.6.norm1.bias",
+      "blocks.6.attn.qkv.bias",
+      "blocks.6.attn.proj.bias",
+      "blocks.6.temporal_norm1.weight",
+      "blocks.6.temporal_norm1.bias",
+      "blocks.6.temporal_attn.qkv_4.bias",
+      "blocks.6.temporal_attn.qkv_8.bias",
+      "blocks.6.temporal_attn.qkv_16.bias",
+      "blocks.6.temporal_attn.proj_4.bias",
+      "blocks.6.temporal_attn.proj_8.bias",
+      "blocks.6.temporal_attn.proj_16.bias",
+      "blocks.6.temporal_fc.bias",
+      "blocks.6.norm2.weight",
+      "blocks.6.norm2.bias",
+      "blocks.6.mlp.fc1.bias",
+      "blocks.6.mlp.fc2.bias",
+      "blocks.6.norm_cls.weight",
+      "blocks.6.norm_cls.bias"
+    ],
+    "lr_scale": 0.177978515625
+  },
+  "layer_7_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.6.attn.qkv.weight",
+      "blocks.6.attn.proj.weight",
+      "blocks.6.temporal_attn.qkv_4.weight",
+      "blocks.6.temporal_attn.qkv_8.weight",
+      "blocks.6.temporal_attn.qkv_16.weight",
+      "blocks.6.temporal_attn.proj_4.weight",
+      "blocks.6.temporal_attn.proj_8.weight",
+      "blocks.6.temporal_attn.proj_16.weight",
+      "blocks.6.temporal_fc.weight",
+      "blocks.6.mlp.fc1.weight",
+      "blocks.6.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.177978515625
+  },
+  "layer_8_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.7.norm1.weight",
+      "blocks.7.norm1.bias",
+      "blocks.7.attn.qkv.bias",
+      "blocks.7.attn.proj.bias",
+      "blocks.7.temporal_norm1.weight",
+      "blocks.7.temporal_norm1.bias",
+      "blocks.7.temporal_attn.qkv_4.bias",
+      "blocks.7.temporal_attn.qkv_8.bias",
+      "blocks.7.temporal_attn.qkv_16.bias",
+      "blocks.7.temporal_attn.proj_4.bias",
+      "blocks.7.temporal_attn.proj_8.bias",
+      "blocks.7.temporal_attn.proj_16.bias",
+      "blocks.7.temporal_fc.bias",
+      "blocks.7.norm2.weight",
+      "blocks.7.norm2.bias",
+      "blocks.7.mlp.fc1.bias",
+      "blocks.7.mlp.fc2.bias",
+      "blocks.7.norm_cls.weight",
+      "blocks.7.norm_cls.bias"
+    ],
+    "lr_scale": 0.2373046875
+  },
+  "layer_8_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.7.attn.qkv.weight",
+      "blocks.7.attn.proj.weight",
+      "blocks.7.temporal_attn.qkv_4.weight",
+      "blocks.7.temporal_attn.qkv_8.weight",
+      "blocks.7.temporal_attn.qkv_16.weight",
+      "blocks.7.temporal_attn.proj_4.weight",
+      "blocks.7.temporal_attn.proj_8.weight",
+      "blocks.7.temporal_attn.proj_16.weight",
+      "blocks.7.temporal_fc.weight",
+      "blocks.7.mlp.fc1.weight",
+      "blocks.7.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.2373046875
+  },
+  "layer_9_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.8.norm1.weight",
+      "blocks.8.norm1.bias",
+      "blocks.8.attn.qkv.bias",
+      "blocks.8.attn.proj.bias",
+      "blocks.8.temporal_norm1.weight",
+      "blocks.8.temporal_norm1.bias",
+      "blocks.8.temporal_attn.qkv_4.bias",
+      "blocks.8.temporal_attn.qkv_8.bias",
+      "blocks.8.temporal_attn.qkv_16.bias",
+      "blocks.8.temporal_attn.proj_4.bias",
+      "blocks.8.temporal_attn.proj_8.bias",
+      "blocks.8.temporal_attn.proj_16.bias",
+      "blocks.8.temporal_fc.bias",
+      "blocks.8.norm2.weight",
+      "blocks.8.norm2.bias",
+      "blocks.8.mlp.fc1.bias",
+      "blocks.8.mlp.fc2.bias",
+      "blocks.8.norm_cls.weight",
+      "blocks.8.norm_cls.bias"
+    ],
+    "lr_scale": 0.31640625
+  },
+  "layer_9_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.8.attn.qkv.weight",
+      "blocks.8.attn.proj.weight",
+      "blocks.8.temporal_attn.qkv_4.weight",
+      "blocks.8.temporal_attn.qkv_8.weight",
+      "blocks.8.temporal_attn.qkv_16.weight",
+      "blocks.8.temporal_attn.proj_4.weight",
+      "blocks.8.temporal_attn.proj_8.weight",
+      "blocks.8.temporal_attn.proj_16.weight",
+      "blocks.8.temporal_fc.weight",
+      "blocks.8.mlp.fc1.weight",
+      "blocks.8.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.31640625
+  },
+  "layer_10_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.9.norm1.weight",
+      "blocks.9.norm1.bias",
+      "blocks.9.attn.qkv.bias",
+      "blocks.9.attn.proj.bias",
+      "blocks.9.temporal_norm1.weight",
+      "blocks.9.temporal_norm1.bias",
+      "blocks.9.temporal_attn.qkv_4.bias",
+      "blocks.9.temporal_attn.qkv_8.bias",
+      "blocks.9.temporal_attn.qkv_16.bias",
+      "blocks.9.temporal_attn.proj_4.bias",
+      "blocks.9.temporal_attn.proj_8.bias",
+      "blocks.9.temporal_attn.proj_16.bias",
+      "blocks.9.temporal_fc.bias",
+      "blocks.9.norm2.weight",
+      "blocks.9.norm2.bias",
+      "blocks.9.mlp.fc1.bias",
+      "blocks.9.mlp.fc2.bias",
+      "blocks.9.norm_cls.weight",
+      "blocks.9.norm_cls.bias"
+    ],
+    "lr_scale": 0.421875
+  },
+  "layer_10_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.9.attn.qkv.weight",
+      "blocks.9.attn.proj.weight",
+      "blocks.9.temporal_attn.qkv_4.weight",
+      "blocks.9.temporal_attn.qkv_8.weight",
+      "blocks.9.temporal_attn.qkv_16.weight",
+      "blocks.9.temporal_attn.proj_4.weight",
+      "blocks.9.temporal_attn.proj_8.weight",
+      "blocks.9.temporal_attn.proj_16.weight",
+      "blocks.9.temporal_fc.weight",
+      "blocks.9.mlp.fc1.weight",
+      "blocks.9.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.421875
+  },
+  "layer_11_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.10.norm1.weight",
+      "blocks.10.norm1.bias",
+      "blocks.10.attn.qkv.bias",
+      "blocks.10.attn.proj.bias",
+      "blocks.10.temporal_norm1.weight",
+      "blocks.10.temporal_norm1.bias",
+      "blocks.10.temporal_attn.qkv_4.bias",
+      "blocks.10.temporal_attn.qkv_8.bias",
+      "blocks.10.temporal_attn.qkv_16.bias",
+      "blocks.10.temporal_attn.proj_4.bias",
+      "blocks.10.temporal_attn.proj_8.bias",
+      "blocks.10.temporal_attn.proj_16.bias",
+      "blocks.10.temporal_fc.bias",
+      "blocks.10.norm2.weight",
+      "blocks.10.norm2.bias",
+      "blocks.10.mlp.fc1.bias",
+      "blocks.10.mlp.fc2.bias",
+      "blocks.10.norm_cls.weight",
+      "blocks.10.norm_cls.bias"
+    ],
+    "lr_scale": 0.5625
+  },
+  "layer_11_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.10.attn.qkv.weight",
+      "blocks.10.attn.proj.weight",
+      "blocks.10.temporal_attn.qkv_4.weight",
+      "blocks.10.temporal_attn.qkv_8.weight",
+      "blocks.10.temporal_attn.qkv_16.weight",
+      "blocks.10.temporal_attn.proj_4.weight",
+      "blocks.10.temporal_attn.proj_8.weight",
+      "blocks.10.temporal_attn.proj_16.weight",
+      "blocks.10.temporal_fc.weight",
+      "blocks.10.mlp.fc1.weight",
+      "blocks.10.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.5625
+  },
+  "layer_12_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.11.norm1.weight",
+      "blocks.11.norm1.bias",
+      "blocks.11.attn.qkv.bias",
+      "blocks.11.attn.proj.bias",
+      "blocks.11.temporal_norm1.weight",
+      "blocks.11.temporal_norm1.bias",
+      "blocks.11.temporal_attn.qkv_4.bias",
+      "blocks.11.temporal_attn.qkv_8.bias",
+      "blocks.11.temporal_attn.qkv_16.bias",
+      "blocks.11.temporal_attn.proj_4.bias",
+      "blocks.11.temporal_attn.proj_8.bias",
+      "blocks.11.temporal_attn.proj_16.bias",
+      "blocks.11.temporal_fc.bias",
+      "blocks.11.norm2.weight",
+      "blocks.11.norm2.bias",
+      "blocks.11.mlp.fc1.bias",
+      "blocks.11.mlp.fc2.bias",
+      "blocks.11.norm_cls.weight",
+      "blocks.11.norm_cls.bias"
+    ],
+    "lr_scale": 0.75
+  },
+  "layer_12_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.11.attn.qkv.weight",
+      "blocks.11.attn.proj.weight",
+      "blocks.11.temporal_attn.qkv_4.weight",
+      "blocks.11.temporal_attn.qkv_8.weight",
+      "blocks.11.temporal_attn.qkv_16.weight",
+      "blocks.11.temporal_attn.proj_4.weight",
+      "blocks.11.temporal_attn.proj_8.weight",
+      "blocks.11.temporal_attn.proj_16.weight",
+      "blocks.11.temporal_fc.weight",
+      "blocks.11.mlp.fc1.weight",
+      "blocks.11.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.75
+  },
+  "layer_13_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "norm.weight",
+      "norm.bias",
+      "head.bias"
+    ],
+    "lr_scale": 1.0
+  },
+  "layer_13_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "head.weight"
+    ],
+    "lr_scale": 1.0
+  }
+}
+optimizer settings: {'lr': 0.000375, 'weight_decay': 0.0, 'eps': 1e-08, 'betas': (0.9, 0.999)}
+Use step level LR scheduler!
+Set warmup steps = 7035
+Set warmup steps = 0
+Max WD = 0.0500000, Min WD = 0.0500000
+criterion = SoftTargetCrossEntropy()
+Test:  [  0/141]  eta: 1:27:58  loss: 0.5124 (0.5124)  acc1: 88.0208 (88.0208)  acc5: 100.0000 (100.0000)  time: 37.4392  data: 11.6717  max mem: 25845
+Test:  [ 10/141]  eta: 0:12:26  loss: 0.2782 (0.3365)  acc1: 94.2708 (92.5189)  acc5: 100.0000 (99.8580)  time: 5.6974  data: 1.0613  max mem: 25846
+Test:  [ 20/141]  eta: 0:08:27  loss: 0.2782 (0.3512)  acc1: 94.2708 (91.9891)  acc5: 100.0000 (99.5536)  time: 2.5294  data: 0.0002  max mem: 25846
+Test:  [ 30/141]  eta: 0:06:46  loss: 0.3130 (0.3798)  acc1: 93.2292 (91.0114)  acc5: 100.0000 (99.5296)  time: 2.5397  data: 0.0002  max mem: 25846
+Test:  [ 40/141]  eta: 0:05:42  loss: 0.3931 (0.4893)  acc1: 90.1042 (87.5762)  acc5: 100.0000 (98.4756)  time: 2.5457  data: 0.0002  max mem: 25846
+Test:  [ 50/141]  eta: 0:04:53  loss: 0.3868 (0.7265)  acc1: 85.9375 (81.9240)  acc5: 100.0000 (93.0249)  time: 2.5483  data: 0.0002  max mem: 25846
+Test:  [ 60/141]  eta: 0:04:13  loss: 0.3774 (0.7103)  acc1: 85.9375 (81.8135)  acc5: 100.0000 (94.1513)  time: 2.6071  data: 0.0565  max mem: 25846
+Test:  [ 70/141]  eta: 0:03:37  loss: 0.1201 (0.6438)  acc1: 99.4792 (83.8102)  acc5: 100.0000 (94.8944)  time: 2.6500  data: 0.0991  max mem: 25846
+Test:  [ 80/141]  eta: 0:03:04  loss: 0.1093 (0.6259)  acc1: 100.0000 (84.6193)  acc5: 100.0000 (94.9074)  time: 2.6977  data: 0.1475  max mem: 25846
+Test:  [ 90/141]  eta: 0:02:34  loss: 0.1165 (0.6660)  acc1: 98.9583 (83.5852)  acc5: 100.0000 (94.5856)  time: 2.9223  data: 0.3730  max mem: 25846
+Test:  [100/141]  eta: 0:02:03  loss: 0.1875 (0.6931)  acc1: 95.3125 (82.7403)  acc5: 100.0000 (94.8639)  time: 2.9494  data: 0.4014  max mem: 25846
+Test:  [110/141]  eta: 0:01:32  loss: 0.1961 (0.7134)  acc1: 95.3125 (82.1040)  acc5: 100.0000 (94.7776)  time: 2.7639  data: 0.2161  max mem: 25846
+Test:  [120/141]  eta: 0:01:02  loss: 0.1250 (0.6740)  acc1: 99.4792 (83.2559)  acc5: 100.0000 (95.2049)  time: 2.6942  data: 0.1455  max mem: 25846
+Test:  [130/141]  eta: 0:00:32  loss: 0.1428 (0.6651)  acc1: 99.4792 (83.5162)  acc5: 100.0000 (95.5033)  time: 2.7008  data: 0.1497  max mem: 25846
+Test:  [140/141]  eta: 0:00:02  loss: 0.1722 (0.6322)  acc1: 96.3542 (84.3811)  acc5: 100.0000 (95.8051)  time: 2.5869  data: 0.0877  max mem: 25846
+Test: Total time: 0:06:49 (2.9064 s / it)
+* Acc@1 84.381 Acc@5 95.805 loss 0.632
+Save Files:  /scratch/tnvdinh/DSAIT4125/results/M2CAI16/surgformer_HTA_KCA_M2CAI16_0.0005_0.75_online_key_frame_frame16_Fixed_Stride_4/0.txt
+Start merging results...
+Reading individual output files
+Merge File 1/2: /scratch/tnvdinh/DSAIT4125/results/M2CAI16/surgformer_HTA_KCA_M2CAI16_0.0005_0.75_online_key_frame_frame16_Fixed_Stride_4/0.txt
+Merge File 2/2: /scratch/tnvdinh/DSAIT4125/results/M2CAI16/surgformer_HTA_KCA_M2CAI16_0.0005_0.75_online_key_frame_frame16_Fixed_Stride_4/1.txt
+Computing final results
+26961
+Accuracy of the network on the 26961 test videos: Top-1: 84.38%, Top-5: 95.79%
