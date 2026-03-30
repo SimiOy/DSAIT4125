@@ -3,9 +3,9 @@
 #SBATCH --partition=gpu-a100
 #SBATCH --account=education-eemcs-courses-dsait4125
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=10
 #SBATCH --gpus-per-task=2
-#SBATCH --mem-per-cpu=6G
+#SBATCH --mem-per-cpu=8000M
 #SBATCH --time=24:00:00
 #SBATCH --output=/scratch/%u/DSAIT4125/jobs/logs/%x.%j.out
 #SBATCH --error=/scratch/%u/DSAIT4125/jobs/logs/%x.%j.err
@@ -40,7 +40,7 @@ export NCCL_P2P_DISABLE=0
 PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
     --batch_size 24 \
     --epochs 20 \
-    --save_ckpt_freq 2 \
+    --save_ckpt_freq 1 \
     --model surgformer_HTA_KCA \
     --finetune "${INIT_CKPT}" \
     --mixup 0.8 \
@@ -60,8 +60,9 @@ PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_ph
     --data_fps 1fps \
     --output_dir "${PROJECT_DIR}/results/MultiBypass140_Bern_fold0_ImageNetInit" \
     --log_dir "${PROJECT_DIR}/results/MultiBypass140_Bern_fold0_ImageNetInit" \
-    --num_workers 4 \
+    --num_workers 2 \
     --clip_grad 1.0 \
     --auto_resume \
     --cut_black \
     --train_fraction ${TRAIN_FRACTION}
+    
