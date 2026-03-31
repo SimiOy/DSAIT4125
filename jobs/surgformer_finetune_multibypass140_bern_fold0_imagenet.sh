@@ -18,7 +18,7 @@ SURGFORMER_DIR="${PROJECT_DIR}/Surgformer"
 # Path to the best Cholec80 checkpoint to finetune from
 CHOLEC80_CKPT="${PROJECT_DIR}/results/Cholec80/surgformer_HTA_KCA_Cholec80_imagenet_baseline/checkpoint-best.pth"
 
-DATA_PATH="/scratch/${USER}/datasets/MultiBypass140"
+DATA_PATH="/scratch/${USER}/data/MultiBypass140"
 NUM_GPUS=2
 TRAIN_FRACTION=1.0
 
