@@ -20,7 +20,7 @@ CHOLEC80_CKPT="${PROJECT_DIR}/results/Cholec80/surgformer_HTA_KCA_Cholec80_image
 
 DATA_PATH="/scratch/${USER}/data/MultiBypass140"
 NUM_GPUS=2
-TRAIN_FRACTION=1.0
+TRAIN_FRACTION=0.5
 
 module purge
 module load 2024r1 miniconda3 cuda/11.6
@@ -42,7 +42,7 @@ export NCCL_P2P_DISABLE=0
 PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
     --batch_size 24 \
     --epochs 20 \
-    --save_ckpt_freq 1 \
+    --save_ckpt_freq 2 \
     --model surgformer_HTA_KCA \
     --finetune "${CHOLEC80_CKPT}" \
     --mixup 0.8 \
