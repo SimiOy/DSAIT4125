@@ -32,3 +32,6 @@ jobs/logs/*.out
 jobs/logs/*.err
 
 pretrain_params/
+
+cholec80_download.log
+**/results/
