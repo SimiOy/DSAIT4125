@@ -1,5 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=surgformer-train-multibypass140
+#SBATCH --qos=short
+#SBATCH --partition=insy,general
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gpus-per-task=1
@@ -7,7 +9,6 @@
 #SBATCH --time=12:00:00
 #SBATCH --output=/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth/jobs/logs/%x.%j.out
 #SBATCH --error=/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth/jobs/logs/%x.%j.err
-# NOTE: add --account and --partition once you know your DAIC allocation
 
 set -euo pipefail
 
