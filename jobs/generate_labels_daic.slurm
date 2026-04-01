@@ -6,8 +6,8 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=8G
 #SBATCH --time=01:00:00
-#SBATCH --output=/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth/jobs/logs/%x.%j.out
-#SBATCH --error=/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth/jobs/logs/%x.%j.err
+#SBATCH --output=/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth/DSAIT4125/jobs/logs/%x.%j.out
+#SBATCH --error=/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth/DSAIT4125/jobs/logs/%x.%j.err
 
 set -euo pipefail
 
