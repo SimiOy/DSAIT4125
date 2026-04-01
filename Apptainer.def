@@ -1,0 +1,46 @@
+Bootstrap: docker
+From: nvidia/cuda:11.6.2-cudnn8-devel-ubuntu20.04
+
+%files
+    environment_delftblue.yml /environment_delftblue.yml
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+
+    # System dependencies (OpenCV, video, build tools)
+    apt-get update && apt-get install -y \
+        wget git curl build-essential \
+        libgl1-mesa-glx libglib2.0-0 \
+        libsm6 libxext6 libxrender-dev \
+        ffmpeg \
+        && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+    # Install Miniforge (conda-forge only — no Anaconda ToS issues, mamba included)
+    wget -q https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O /tmp/miniforge.sh
+    bash /tmp/miniforge.sh -b -p /opt/conda
+    rm /tmp/miniforge.sh
+    export PATH="/opt/conda/bin:$PATH"
+
+    # Create the environment from the yml
+    # pip works fine here — container uses a real Linux filesystem, not /tudelft.net
+    /opt/conda/bin/mamba env create -f /environment_delftblue.yml -n surgical-action-recognition
+
+    # timm must be installed after PyTorch, pinned to 0.4.12 (Surgformer uses register_model from this API)
+    /opt/conda/envs/surgical-action-recognition/bin/pip install timm==0.4.12 --no-deps
+
+    # Force numpy<2 LAST — pip deps (imgaug, scikit-image, etc.) upgrade numpy to 2.x
+    # PyTorch 1.13.1 and timm 0.4.12 are compiled against numpy 1.x
+    /opt/conda/envs/surgical-action-recognition/bin/pip install "numpy<2" --upgrade
+
+    # Clean up cache
+    /opt/conda/bin/conda clean --all -y
+    /opt/conda/envs/surgical-action-recognition/bin/pip cache purge
+
+    # Auto-activate environment on container start
+    echo '. "/opt/conda/etc/profile.d/conda.sh"' >> $APPTAINER_ENVIRONMENT
+    echo 'conda activate surgical-action-recognition' >> $APPTAINER_ENVIRONMENT
+    # Prefer conda's libstdc++ over Ubuntu 20.04's (needs GLIBCXX_3.4.29 from libstdcxx-ng)
+    echo 'export LD_LIBRARY_PATH=/opt/conda/envs/surgical-action-recognition/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}' >> $APPTAINER_ENVIRONMENT
+
+%runscript
+    exec "$@"
