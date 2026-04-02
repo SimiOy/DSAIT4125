@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=surgformer-ft-mb140-b0-endovit
-#SBATCH --partition=gpu_a100
+#SBATCH --partition=gpu_h100
 #SBATCH --account=tdsei8531
 #SBATCH --qos=normal
 #SBATCH --ntasks=1
