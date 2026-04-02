@@ -1,5 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=surgformer-ft-mb140-b0-img-025
+#SBATCH --qos=medium
 #SBATCH --partition=insy,general
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
