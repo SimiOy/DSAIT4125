@@ -42,7 +42,8 @@ export NCCL_SOCKET_IFNAME=lo
 export NCCL_P2P_DISABLE=0
 
 PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
-    --batch_size 16 \
+    --batch_size 8 \
+    --update_freq 2 \
     --epochs 20 \
     --save_ckpt_freq 2 \
     --model surgformer_HTA_KCA \
