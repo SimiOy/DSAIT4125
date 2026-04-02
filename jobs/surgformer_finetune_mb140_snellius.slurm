@@ -44,7 +44,9 @@ export NCCL_SOCKET_IFNAME=lo
 export NCCL_P2P_DISABLE=0
 export PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
 
-PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
+MASTER_PORT=$(( 29500 + SLURM_JOB_ID % 1000 ))
+
+PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} --master_port=${MASTER_PORT} downstream_phase/run_phase_training.py \
     --batch_size 16 \
     --epochs 20 \
     --save_ckpt_freq 2 \
