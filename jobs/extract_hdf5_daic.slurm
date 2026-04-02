@@ -15,9 +15,19 @@ UMBRELLA="/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth"
 PROJECT_DIR="${UMBRELLA}/DSAIT4125"
 CONTAINER="${UMBRELLA}/containers/surgical-action-recognition.sif"
 
+PYPACKAGES="${UMBRELLA}/pypackages"
+mkdir -p "${PYPACKAGES}"
+
+# Install cv2 outside the container if not already there (avoids broken Qt bundled in pip wheel)
+if [ ! -d "${PYPACKAGES}/cv2" ]; then
+    pip install opencv-python-headless==4.8.1.78 --target "${PYPACKAGES}"
+fi
+
 srun apptainer exec \
     --bind "${PROJECT_DIR}:/project" \
     --bind "${UMBRELLA}/data:/data" \
+    --bind "${PYPACKAGES}:/pypackages" \
+    --env PYTHONPATH=/pypackages \
     "${CONTAINER}" \
     python /project/scripts/extract_hdf5_multibypass140.py \
         --data-dir /data/MultiBypass140 \
