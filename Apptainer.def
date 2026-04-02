@@ -25,21 +25,26 @@ From: nvidia/cuda:11.6.2-cudnn8-devel-ubuntu20.04
     # pip works fine here — container uses a real Linux filesystem, not /tudelft.net
     /opt/conda/bin/mamba env create -f /environment_delftblue.yml -n surgical-action-recognition
 
-    # timm must be installed after PyTorch, pinned to 0.4.12 (Surgformer uses register_model from this API)
+    # Replace pip opencv with conda-forge build — pip wheel bundles Qt libs that break in containers
+    /opt/conda/envs/surgical-action-recognition/bin/pip uninstall -y opencv-python-headless || true
+    /opt/conda/bin/mamba install -n surgical-action-recognition -c conda-forge "opencv=4.8.*" -y --quiet
+
+    # timm pinned to 0.4.12 — Surgformer uses register_model from this specific API
+    # Must be after PyTorch so it doesn't pull a newer torch
     /opt/conda/envs/surgical-action-recognition/bin/pip install timm==0.4.12 --no-deps
 
-    # Force numpy<2 LAST — pip deps (imgaug, scikit-image, etc.) upgrade numpy to 2.x
-    # PyTorch 1.13.1 and timm 0.4.12 are compiled against numpy 1.x
+    # Pin numpy<2 LAST — pip deps (imgaug, scikit-image, etc.) upgrade numpy to 2.x
+    # PyTorch 1.13.1 and timm 0.4.12 are compiled against numpy 1.x ABI
     /opt/conda/envs/surgical-action-recognition/bin/pip install "numpy<2" --upgrade
 
-    # Clean up cache
+    # Clean up
     /opt/conda/bin/conda clean --all -y
     /opt/conda/envs/surgical-action-recognition/bin/pip cache purge
 
     # Auto-activate environment on container start
     echo '. "/opt/conda/etc/profile.d/conda.sh"' >> $APPTAINER_ENVIRONMENT
     echo 'conda activate surgical-action-recognition' >> $APPTAINER_ENVIRONMENT
-    # Prefer conda's libstdc++ over Ubuntu 20.04's (needs GLIBCXX_3.4.29 from libstdcxx-ng)
+    # Prefer conda's libstdc++ over Ubuntu 20.04 system lib (needs GLIBCXX_3.4.29 from libstdcxx-ng)
     echo 'export LD_LIBRARY_PATH=/opt/conda/envs/surgical-action-recognition/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}' >> $APPTAINER_ENVIRONMENT
 
 %runscript
