@@ -4,7 +4,7 @@
 #SBATCH --partition=insy,general
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gres=gpu:a40:2
+#SBATCH --gres=gpu:l40:2
 #SBATCH --mem-per-cpu=6G
 #SBATCH --time=24:00:00
 #SBATCH --output=/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth/AutomaticMicrogliaDetection/jobs/logs/%x.%j.out
@@ -56,6 +56,7 @@ srun apptainer exec --nv \
         --log_dir /results/MultiBypass140_Bern_fold0_ImageNetInit \
         --num_workers 4 \
         --clip_grad 1.0 \
+        --opt_eps 1e-6 \
         --auto_resume \
         --cut_black \
         --train_fraction ${TRAIN_FRACTION}"
