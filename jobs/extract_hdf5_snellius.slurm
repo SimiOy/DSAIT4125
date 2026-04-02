@@ -1,11 +1,11 @@
 #!/bin/bash
 #SBATCH --job-name=extract-hdf5-mb140
-#SBATCH --partition=rome
+#SBATCH --partition=staging
 #SBATCH --account=tdsei8531
 #SBATCH --qos=normal
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
-#SBATCH --mem=32G
+#SBATCH --mem=64G
 #SBATCH --time=06:00:00
 #SBATCH --output=/projects/0/prjs0951/simi/DSAIT4125/jobs/logs/%x.%j.out
 #SBATCH --error=/projects/0/prjs0951/simi/DSAIT4125/jobs/logs/%x.%j.err
