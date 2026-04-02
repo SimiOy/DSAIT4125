@@ -18,7 +18,7 @@ CONDA_ENV="/projects/0/prjs0951/simi/.conda/envs/surgical-action-recognition"
 
 mkdir -p "${PROJECT_DIR}/jobs/logs"
 
-source "${HOME}/.bashrc"
+source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate "${CONDA_ENV}"
 
 python "${PROJECT_DIR}/scripts/extract_hdf5_multibypass140.py" \
