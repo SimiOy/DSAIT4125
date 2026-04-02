@@ -4,9 +4,9 @@
 #SBATCH --account=tdsei8531
 #SBATCH --qos=normal
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=18
-#SBATCH --gres=gpu:3
-#SBATCH --mem=180G
+#SBATCH --cpus-per-task=16
+#SBATCH --gres=gpu:2
+#SBATCH --mem=120G
 #SBATCH --time=48:00:00
 #SBATCH --output=/projects/0/prjs0951/simi/DSAIT4125/jobs/logs/%x.%j.out
 #SBATCH --error=/projects/0/prjs0951/simi/DSAIT4125/jobs/logs/%x.%j.err
@@ -20,7 +20,7 @@ CONDA_ENV="/projects/0/prjs0951/simi/.conda/envs/surgical-action-recognition"
 ENDOVIT_CKPT="${PROJECT_DIR}/results/weights/endovit_cholec80_surgformer.pth"
 
 DATA_PATH="/gpfs/work4/0/prjs0951/simi/data/multibypass140"
-NUM_GPUS=3
+NUM_GPUS=2
 TRAIN_FRACTION=1.0
 
 OUTPUT_DIR="/gpfs/work4/0/prjs0951/simi/results/MultiBypass140_Bern_fold0_EndoViT_100pct"
@@ -69,4 +69,5 @@ PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_ph
     --clip_grad 1.0 \
     --auto_resume \
     --cut_black \
-    --train_fraction ${TRAIN_FRACTION}
+    --train_fraction ${TRAIN_FRACTION} \
+    --enable_deepspeed
