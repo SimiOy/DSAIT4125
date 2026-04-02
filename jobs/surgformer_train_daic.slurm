@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=surgformer-train-microglia
+#SBATCH --job-name=surgformer-ft-mb140-b0-img-025
 #SBATCH --qos=short
 #SBATCH --partition=insy,general
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --gpus-per-task=1
-#SBATCH --mem-per-cpu=8G
-#SBATCH --time=12:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --gpus-per-task=2
+#SBATCH --mem-per-cpu=6G
+#SBATCH --time=24:00:00
 #SBATCH --output=/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth/AutomaticMicrogliaDetection/jobs/logs/%x.%j.out
 #SBATCH --error=/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth/AutomaticMicrogliaDetection/jobs/logs/%x.%j.err
 
@@ -15,11 +15,14 @@ set -euo pipefail
 UMBRELLA="/tudelft.net/staff-umbrella/StudentsCVlab/ccharlesworth"
 PROJECT_DIR="${UMBRELLA}/AutomaticMicrogliaDetection"
 CONTAINER="${UMBRELLA}/containers/surgical-action-recognition.sif"
-DATA_DIR="${UMBRELLA}/data/Microglia"
-PRETRAIN="${UMBRELLA}/pretrain_params/pytorch_model.bin"
-OUTPUT_DIR="${UMBRELLA}/results/surgformer_microglia"
+
+CHOLEC80_CKPT="${UMBRELLA}/AutomaticMicrogliaDetection/results/weights/imagenet_cholec80_surgformer.pth"
+
+DATA_PATH="${UMBRELLA}/data/Microglia"
+OUTPUT_DIR="${UMBRELLA}/results/MultiBypass140_Bern_fold0_ImageNetInit"
 
 mkdir -p "${OUTPUT_DIR}"
+mkdir -p "${PROJECT_DIR}/jobs/logs"
 
 srun apptainer exec --nv \
     --bind "${PROJECT_DIR}:/project" \
@@ -27,19 +30,32 @@ srun apptainer exec --nv \
     --bind "${UMBRELLA}/pretrain_params:/pretrain_params" \
     --bind "${UMBRELLA}/results:/results" \
     "${CONTAINER}" \
-    python /project/Surgformer/downstream_phase/run_phase_training.py \
-        --model surgformer_HTA \
-        --data_set Microglia \
-        --data_strategy offline \
-        --output_mode key_frame \
-        --cut_black \
-        --data_fps 1fps \
-        --nb_classes 7 \
+    bash -c "cd /project/Surgformer && torchrun --nproc_per_node=2 \
+        downstream_phase/run_phase_training.py \
+        --batch_size 16 \
+        --epochs 20 \
+        --save_ckpt_freq 2 \
+        --model surgformer_HTA_KCA \
+        --finetune /pretrain_params/checkpoint-best.pth \
+        --mixup 0.8 \
+        --cutmix 1.0 \
+        --smoothing 0.1 \
+        --lr 1e-4 \
+        --layer_decay 0.75 \
+        --warmup_epochs 2 \
         --data_path /data/Microglia \
-        --pretrained_path /pretrain_params/pytorch_model.bin \
-        --output_dir /results/surgformer_microglia \
-        --batch_size 12 \
-        --num_frames 8 \
+        --eval_data_path /data/Microglia \
+        --nb_classes 12 \
+        --data_strategy online \
+        --output_mode key_frame \
+        --num_frames 16 \
         --sampling_rate 4 \
-        --epochs 50 \
-        --no_auto_resume
+        --data_set MultiBypass140 \
+        --data_fps 1fps \
+        --output_dir /results/MultiBypass140_Bern_fold0_ImageNetInit \
+        --log_dir /results/MultiBypass140_Bern_fold0_ImageNetInit \
+        --num_workers 4 \
+        --clip_grad 1.0 \
+        --auto_resume \
+        --cut_black \
+        --train_fraction 0.25"
