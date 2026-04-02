@@ -1,6 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=extract-hdf5-mb140
+#SBATCH --partition=rome
 #SBATCH --account=tdsei8531
+#SBATCH --qos=normal
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=32G
