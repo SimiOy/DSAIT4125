@@ -28,8 +28,12 @@ OUTPUT_DIR="/gpfs/work4/0/prjs0951/simi/results/MultiBypass140_Bern_fold0_EndoVi
 mkdir -p "${OUTPUT_DIR}"
 mkdir -p "${PROJECT_DIR}/jobs/logs"
 
+module load 2023
+module load CUDA/12.1.1
+
 export PATH="${CONDA_ENV}/bin:${PATH}"
 export LD_LIBRARY_PATH="${CONDA_ENV}/lib:${LD_LIBRARY_PATH:-}"
+export CUDA_HOME="${CUDA_ROOT}"
 
 cd "${SURGFORMER_DIR}"
 
