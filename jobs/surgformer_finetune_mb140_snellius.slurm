@@ -40,10 +40,10 @@ unset SLURM_PROCID SLURM_LOCALID SLURM_NTASKS SLURM_NODELIST
 export NCCL_IB_DISABLE=1
 export NCCL_SOCKET_IFNAME=lo
 export NCCL_P2P_DISABLE=0
+export PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
 
 PYTHONUNBUFFERED=1 torchrun --nproc_per_node=${NUM_GPUS} downstream_phase/run_phase_training.py \
-    --batch_size 8 \
-    --update_freq 2 \
+    --batch_size 16 \
     --epochs 20 \
     --save_ckpt_freq 2 \
     --model surgformer_HTA_KCA \
