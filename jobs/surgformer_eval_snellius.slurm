@@ -33,22 +33,22 @@ if [ ! -f "${DS_CKPT}" ]; then
     exit 1
 fi
 
-if [ ! -f "${CHECKPOINT_PATH}" ]; then
-    echo "Extracting model weights from deepspeed checkpoint..."
-    python3 -c "
-import torch
-ds = torch.load('${DS_CKPT}', map_location='cpu')
-torch.save({'model': ds['module']}, '${CHECKPOINT_PATH}')
-print('Saved extracted checkpoint to ${CHECKPOINT_PATH}')
-"
-fi
-
 module load 2023
 module load CUDA/12.1.1
 
 export PATH="${CONDA_ENV}/bin:${PATH}"
 export LD_LIBRARY_PATH="${CONDA_ENV}/lib:${LD_LIBRARY_PATH:-}"
 export CUDA_HOME="${CUDA_ROOT}"
+
+if [ ! -f "${CHECKPOINT_PATH}" ]; then
+    echo "Extracting model weights from deepspeed checkpoint..."
+    python3 -c "
+import torch
+ds = torch.load('${DS_CKPT}', map_location='cpu', weights_only=False)
+torch.save({'model': ds['module']}, '${CHECKPOINT_PATH}')
+print('Saved extracted checkpoint to ${CHECKPOINT_PATH}')
+"
+fi
 
 cd "${SURGFORMER_DIR}"
 
