@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:1
-#SBATCH --mem=60G
+#SBATCH --mem=120G
 #SBATCH --time=04:00:00
 #SBATCH --output=/projects/0/prjs0951/simi/DSAIT4125/jobs/logs/%x.%j.out
 #SBATCH --error=/projects/0/prjs0951/simi/DSAIT4125/jobs/logs/%x.%j.err
