@@ -22,6 +22,10 @@ if [ "${DATASET}" = "M2CAI16" ]; then
     DATA_PATH="/scratch/${USER}/data/m2cai16"
     RUN_DIR="${PROJECT_DIR}/results/M2CAI16/surgformer_HTA_KCA_M2CAI16_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4"
     NB_CLASSES=8
+elif [ "${DATASET}" = "MultiBypass140" ]; then
+    DATA_PATH="/scratch/${USER}/data/MultiBypass140"
+    RUN_DIR="${PROJECT_DIR}/results/MultiBypass140_Bern_fold0_ImageNetInit/surgformer_HTA_KCA_MultiBypass140_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4"
+    NB_CLASSES=12
 else
     DATA_PATH="/scratch/${USER}/data/Cholec80"
     RUN_DIR="${PROJECT_DIR}/results/Cholec80/surgformer_HTA_KCA_Cholec80_0.0005_0.75_online_key_frame_frame16_Fixed_Stride_4"
