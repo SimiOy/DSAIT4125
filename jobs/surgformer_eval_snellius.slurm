@@ -25,11 +25,22 @@ if [ -z "${RUN_DIR:-}" ]; then
     exit 1
 fi
 
-CHECKPOINT_PATH="${RUN_DIR}/checkpoint-best.pth"
+DS_CKPT="${RUN_DIR}/checkpoint-best/mp_rank_00_model_states.pt"
+CHECKPOINT_PATH="${RUN_DIR}/checkpoint-best-extracted.pth"
+
+if [ ! -f "${DS_CKPT}" ]; then
+    echo "ERROR: deepspeed checkpoint not found at ${DS_CKPT}"
+    exit 1
+fi
 
 if [ ! -f "${CHECKPOINT_PATH}" ]; then
-    echo "ERROR: checkpoint not found at ${CHECKPOINT_PATH}"
-    exit 1
+    echo "Extracting model weights from deepspeed checkpoint..."
+    python3 -c "
+import torch
+ds = torch.load('${DS_CKPT}', map_location='cpu')
+torch.save({'model': ds['module']}, '${CHECKPOINT_PATH}')
+print('Saved extracted checkpoint to ${CHECKPOINT_PATH}')
+"
 fi
 
 module load 2023
