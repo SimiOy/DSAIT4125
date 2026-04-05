@@ -31,32 +31,32 @@ DATASETS = {
     },
     "multibypass140": {
         "phase_names": [
-            "Trocar\nPlacement",
-            "Omentum\nResection",
-            "Calibration\nTube",
+            "Preparation",
             "Gastric Pouch\nCreation",
-            "Gastrojejunal\nAnastomosis",
-            "GJ Anastomosis\nCheck",
-            "Mesenteric\nDefect Closure",
-            "Jejunojejunal\nAnastomosis",
-            "JJ Anastomosis\nCheck",
-            "Petersen's\nSpace Closure",
-            "Liver Retractor\nRemoval",
-            "Closure",
+            "Omentum\nDivision",
+            "GJ\nAnastomosis",
+            "Anastomosis\nTest",
+            "Jejunal\nSeparation",
+            "Closure\nPetersen Space",
+            "JJ\nAnastomosis",
+            "Closure\nMesenteric Defect",
+            "Cleaning /\nCoagulation",
+            "Disassembling",
+            "Other\nIntervention",
         ],
         "colors": [
-            "#b3cde0",  # Trocar Placement
-            "#ccebc5",  # Omentum Resection
-            "#fbb4ae",  # Calibration Tube
+            "#ccebc5",  # Preparation
             "#fed9a6",  # Gastric Pouch Creation
+            "#fbb4ae",  # Omentum Division
             "#ffffcc",  # GJ Anastomosis
-            "#e5d8bd",  # GJ Anastomosis Check
-            "#fddaec",  # Mesenteric Defect Cls.
+            "#e5d8bd",  # Anastomosis Test
+            "#b3cde0",  # Jejunal Separation
+            "#fddaec",  # Closure Petersen Space
             "#decbe4",  # JJ Anastomosis
-            "#b3d9e8",  # JJ Anastomosis Check
-            "#d4eac8",  # Petersen's Space Cls.
-            "#fce4b0",  # Liver Retractor Removal
-            "#e8d5ec",  # Closure
+            "#d4eac8",  # Closure Mesenteric Defect
+            "#fce4b0",  # Cleaning / Coagulation
+            "#b3d9e8",  # Disassembling
+            "#e8d5ec",  # Other Intervention
         ],
     },
     "m2cai16": {
