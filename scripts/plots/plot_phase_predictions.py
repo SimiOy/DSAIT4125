@@ -1,18 +1,3 @@
-"""
-Plot model predictions vs ground truth as a phase timeline (colored bars).
-
-Usage:
-    python scripts/plots/plot_phase_predictions.py \
-        results/ImageNet_Surgformer/Cholec80/testing/0.txt \
-        results/EndoVIT_Surgformer/Cholec80/testing/0.txt \
-        --output results/comparison/phase_timeline_cholec80.png \
-        --title "Surgformer — Cholec80 test set phase timeline"
-
-Each row is a colored stripe where the color encodes the surgical phase.
-Three rows: Ground Truth | ImageNet Surgformer | EndoVIT Surgformer.
-X-axis = frames (no tick labels — too dense).
-"""
-
 import argparse
 import ast
 from pathlib import Path
@@ -23,9 +8,6 @@ import matplotlib.patches as mpatches
 from matplotlib.colors import ListedColormap
 
 
-# ---------------------------------------------------------------------------
-# Dataset phase metadata
-# ---------------------------------------------------------------------------
 DATASETS = {
     "cholec80": {
         "phase_names": [
@@ -38,13 +20,43 @@ DATASETS = {
             "Gallbladder\nRetraction",
         ],
         "colors": [
-            "#b3cde0",  # 0 Preparation        — pastel blue
-            "#fbb4ae",  # 1 CalotTriangle       — pastel orange
-            "#fed9a6",  # 2 Clipping            — pastel red/pink
-            "#b5ead7",  # 3 GB Dissection       — pastel mint
-            "#e5d8bd",  # 4 GB Packaging        — pastel green
-            "#fddaec",  # 5 Cleaning            — pastel yellow
-            "#decbe4",  # 6 GB Retraction       — pastel lavender
+            "#ccebc5",  # Preparation
+            "#fbb4ae",  # CalotTriangle Diss.
+            "#fed9a6",  # Clipping & Cutting
+            "#ffffcc",  # GB Dissection
+            "#e5d8bd",  # GB Packaging
+            "#fddaec",  # Cleaning/Coagulation
+            "#decbe4",  # GB Retraction
+        ],
+    },
+    "multibypass140": {
+        "phase_names": [
+            "Trocar\nPlacement",
+            "Omentum\nResection",
+            "Calibration\nTube",
+            "Gastric Pouch\nCreation",
+            "Gastrojejunal\nAnastomosis",
+            "GJ Anastomosis\nCheck",
+            "Mesenteric\nDefect Closure",
+            "Jejunojejunal\nAnastomosis",
+            "JJ Anastomosis\nCheck",
+            "Petersen's\nSpace Closure",
+            "Liver Retractor\nRemoval",
+            "Closure",
+        ],
+        "colors": [
+            "#b3cde0",  # Trocar Placement
+            "#ccebc5",  # Omentum Resection
+            "#fbb4ae",  # Calibration Tube
+            "#fed9a6",  # Gastric Pouch Creation
+            "#ffffcc",  # GJ Anastomosis
+            "#e5d8bd",  # GJ Anastomosis Check
+            "#fddaec",  # Mesenteric Defect Cls.
+            "#decbe4",  # JJ Anastomosis
+            "#b3d9e8",  # JJ Anastomosis Check
+            "#d4eac8",  # Petersen's Space Cls.
+            "#fce4b0",  # Liver Retractor Removal
+            "#e8d5ec",  # Closure
         ],
     },
     "m2cai16": {
@@ -59,22 +71,19 @@ DATASETS = {
             "Gallbladder\nRetraction",
         ],
         "colors": [
-            "#b3cde0",  # 0 Trocar Placement    — pastel steel blue
-            "#ccebc5",  # 1 Preparation         — pastel sage green
-            "#fbb4ae",  # 2 CalotTriangle       — pastel salmon
-            "#fed9a6",  # 3 Clipping            — pastel peach
-            "#ffffcc",  # 4 GB Dissection       — pastel lemon
-            "#e5d8bd",  # 5 GB Packaging        — pastel tan
-            "#fddaec",  # 6 Cleaning            — pastel rose
-            "#decbe4",  # 7 GB Retraction       — pastel lilac
+            "#b3cde0",  # Trocar Placement
+            "#ccebc5",  # Preparation
+            "#fbb4ae",  # CalotTriangle Dissection
+            "#fed9a6",  # Clipping & Cutting
+            "#ffffcc",  # Gallbladder Dissection
+            "#e5d8bd",  # Gallbladder Packaging
+            "#fddaec",  # Cleaning / Coagulation
+            "#decbe4",  # Gallbladder Retraction
         ],
     },
 }
 
 
-# ---------------------------------------------------------------------------
-# Parsing
-# ---------------------------------------------------------------------------
 def parse_predictions(path: Path):
     """Return dict {global_idx: (pred, gt)} parsed from a test output file."""
     data = {}
@@ -106,9 +115,6 @@ def parse_predictions(path: Path):
     return data
 
 
-# ---------------------------------------------------------------------------
-# Plotting
-# ---------------------------------------------------------------------------
 def plot_timeline(
     gt: np.ndarray,
     pred_imagenet: np.ndarray,
@@ -175,9 +181,6 @@ def plot_timeline(
     plt.show()
 
 
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
 def main():
     parser = argparse.ArgumentParser(description="Phase timeline: predictions vs ground truth")
     parser.add_argument("imagenet_file", type=Path, help="ImageNet Surgformer test output (0.txt)")

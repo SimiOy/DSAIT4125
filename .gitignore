@@ -36,3 +36,4 @@ pretrain_params/
 cholec80_download.log
 # **/results/
 *.sif
+**.pyc
