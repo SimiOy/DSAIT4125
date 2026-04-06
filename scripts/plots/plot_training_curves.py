@@ -1,19 +1,3 @@
-"""
-Compare ImageNet-Surgformer vs EndoViT-Surgformer training curves on the same plot.
-
-Manual usage (one dataset at a time):
-    python scripts/plots/plot_training_curves.py \\
-        --imagenet-logs results/ImageNet_Surgformer/Cholec80/training/*.out \\
-        --endovit-logs  results/EndoVIT_Surgformer/Cholec80/training/*.out \\
-        --output        results/comparison/cholec80_training_curves.png \\
-        --title         "Cholec80 — ImageNet vs EndoViT pretrain"
-
-Auto mode (generates all 4 dataset comparison plots at once):
-    python scripts/plots/plot_training_curves.py --auto
-
-Multiple .out files per model are merged in order; duplicate epochs keep the first occurrence.
-"""
-
 import re
 import argparse
 from pathlib import Path
@@ -22,10 +6,6 @@ from collections import OrderedDict
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
-
-# ---------------------------------------------------------------------------
-# Log parsing
-# ---------------------------------------------------------------------------
 
 RE_EPOCH_END   = re.compile(r"^Epoch: \[(\d+)\] Total time:")
 RE_TRAIN_STATS = re.compile(r"^Averaged stats:.*?\bloss:\s*[\d.]+\s*\(([\d.]+)\)")
@@ -85,24 +65,12 @@ def load_model_records(log_paths: list[Path]) -> OrderedDict:
     return merge_records(*[parse_log(p) for p in log_paths])
 
 
-# ---------------------------------------------------------------------------
-# Colour palette
-# ---------------------------------------------------------------------------
-# Each metric gets a (dark, light) pair.
-# EndoViT  → dark   (solid lines)
-# ImageNet → light  (dashed lines, same hue)
-
 COLORS = {
     "train_loss": ("#1f77b4", "#aec7e8"),   # blue family
     "val_loss":   ("#d62728", "#f7a6a6"),   # red family
     "val_acc1":   ("#2ca02c", "#98df8a"),   # green family
-    "val_acc5":   ("#9467bd", "#c5b0d5"),   # purple family
 }
 
-
-# ---------------------------------------------------------------------------
-# Plotting
-# ---------------------------------------------------------------------------
 
 def _plot_model(ax_loss, ax_acc, records: OrderedDict, label_prefix: str,
                 dark: bool, show_train_loss: bool = True):
@@ -117,13 +85,11 @@ def _plot_model(ax_loss, ax_acc, records: OrderedDict, label_prefix: str,
     c_tl  = COLORS["train_loss"][0 if dark else 1]
     c_vl  = COLORS["val_loss"][0   if dark else 1]
     c_a1  = COLORS["val_acc1"][0   if dark else 1]
-    c_a5  = COLORS["val_acc5"][0   if dark else 1]
 
     epochs     = sorted(records.keys())
     train_loss = [records[e]["train_loss"] for e in epochs]
     val_loss   = [records[e]["val_loss"]   for e in epochs]
     val_acc1   = [records[e]["val_acc1"]   for e in epochs]
-    val_acc5   = [records[e]["val_acc5"]   for e in epochs]
 
     best_epoch = max(epochs, key=lambda e: records[e]["val_acc1"])
     best_acc1  = records[best_epoch]["val_acc1"]
@@ -143,10 +109,6 @@ def _plot_model(ax_loss, ax_acc, records: OrderedDict, label_prefix: str,
     ax_acc.plot(epochs, val_acc1,
                 label=f"{label_prefix} Val Acc@1",
                 color=c_a1, linestyle=style, marker="o",
-                markersize=ms, linewidth=1.5, alpha=alpha)
-    ax_acc.plot(epochs, val_acc5,
-                label=f"{label_prefix} Val Acc@5",
-                color=c_a5, linestyle=style, marker="s",
                 markersize=ms, linewidth=1.5, alpha=alpha)
     ax_acc.axvline(best_epoch,
                    color=c_a1, linestyle=":",
@@ -193,36 +155,53 @@ def plot_comparison(imagenet_records: OrderedDict,
     plt.close(fig)
 
 
-# ---------------------------------------------------------------------------
-# Auto mode — hard-coded dataset configs
-# ---------------------------------------------------------------------------
-
 ROOT = Path(__file__).resolve().parent.parent.parent / "results"
 
 AUTO_CONFIGS = [
+    # --- Cholec80 ---
     {
         "title":  "Cholec80 — ImageNet vs EndoViT pretrain",
-        "output": ROOT / "comparison" / "cholec80_training_curves.png",
-        "imagenet_logs": sorted((ROOT / "ImageNet_Surgformer" / "Cholec80" / "training").glob("*.out")),
-        "endovit_logs":  sorted((ROOT / "EndoVIT_Surgformer"  / "Cholec80" / "training").glob("*.out")),
+        "output": ROOT / "comparison" / "cholec80" / "training_curves.png",
+        "imagenet_logs": sorted((ROOT / "ImageNet_Surgformer" / "Cholec80"        / "training").glob("*.out")),
+        "endovit_logs":  sorted((ROOT / "EndoVIT_Surgformer"  / "Cholec80"        / "training").glob("*.out")),
     },
+    # --- M2CAI16 ---
     {
         "title":  "M2CAI16 full — ImageNet vs EndoViT pretrain",
-        "output": ROOT / "comparison" / "m2cai16_full_training_curves.png",
+        "output": ROOT / "comparison" / "m2cai16" / "full" / "training_curves.png",
         "imagenet_logs": sorted((ROOT / "ImageNet_Surgformer" / "M2CAI16" / "full"    / "training").glob("*.out")),
         "endovit_logs":  sorted((ROOT / "EndoVIT_Surgformer"  / "M2CAI16" / "full"    / "training").glob("*.out")),
     },
     {
         "title":  "M2CAI16 half — ImageNet vs EndoViT pretrain",
-        "output": ROOT / "comparison" / "m2cai16_half_training_curves.png",
+        "output": ROOT / "comparison" / "m2cai16" / "half" / "training_curves.png",
         "imagenet_logs": sorted((ROOT / "ImageNet_Surgformer" / "M2CAI16" / "half"    / "training").glob("*.out")),
         "endovit_logs":  sorted((ROOT / "EndoVIT_Surgformer"  / "M2CAI16" / "half"    / "training").glob("*.out")),
     },
     {
         "title":  "M2CAI16 quarter — ImageNet vs EndoViT pretrain",
-        "output": ROOT / "comparison" / "m2cai16_quarter_training_curves.png",
+        "output": ROOT / "comparison" / "m2cai16" / "quarter" / "training_curves.png",
         "imagenet_logs": sorted((ROOT / "ImageNet_Surgformer" / "M2CAI16" / "quarter" / "training").glob("*.out")),
         "endovit_logs":  sorted((ROOT / "EndoVIT_Surgformer"  / "M2CAI16" / "quarter" / "training").glob("*.out")),
+    },
+    # --- MultiBypass140 ---
+    {
+        "title":  "MultiBypass140 full — ImageNet vs EndoViT pretrain",
+        "output": ROOT / "comparison" / "multibypass140" / "full" / "training_curves.png",
+        "imagenet_logs": sorted((ROOT / "ImageNet_Surgformer" / "multibypass140" / "full"    / "training").glob("*.out")),
+        "endovit_logs":  sorted((ROOT / "EndoVIT_Surgformer"  / "multibypass140" / "full"    / "training").glob("*.out")),
+    },
+    {
+        "title":  "MultiBypass140 half — ImageNet vs EndoViT pretrain",
+        "output": ROOT / "comparison" / "multibypass140" / "half" / "training_curves.png",
+        "imagenet_logs": sorted((ROOT / "ImageNet_Surgformer" / "multibypass140" / "half"    / "training").glob("*.out")),
+        "endovit_logs":  sorted((ROOT / "EndoVIT_Surgformer"  / "multibypass140" / "half"    / "training").glob("*.out")),
+    },
+    {
+        "title":  "MultiBypass140 quarter — ImageNet vs EndoViT pretrain",
+        "output": ROOT / "comparison" / "multibypass140" / "quarter" / "training_curves.png",
+        "imagenet_logs": sorted((ROOT / "ImageNet_Surgformer" / "multibypass140" / "quarter" / "training").glob("*.out")),
+        "endovit_logs":  sorted((ROOT / "EndoVIT_Surgformer"  / "multibypass140" / "quarter" / "training").glob("*.out")),
     },
 ]
 
@@ -253,10 +232,6 @@ def _summarise(label: str, records: OrderedDict):
     print(f"  {label}: {len(records)} epochs, "
           f"best Val Acc@1 = {records[best]['val_acc1']:.2f}% @ ep {best}")
 
-
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
 
 def main():
     parser = argparse.ArgumentParser(

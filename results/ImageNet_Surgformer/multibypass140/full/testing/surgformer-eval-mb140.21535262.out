@@ -1,0 +1,666 @@
+Extracting model weights from deepspeed checkpoint...
+Saved extracted checkpoint to /gpfs/work4/0/prjs0951/simi/results/MultiBypass140_Bern_fold0_ImageNet_100pct/surgformer_HTA_KCA_MultiBypass140_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4//checkpoint-best-extracted.pth
+===========     Init Distribution     ===========
+| distributed init (rank 0): env://, gpu 0
+Namespace(batch_size=16, epochs=50, update_freq=1, save_ckpt_freq=10, model='surgformer_HTA_KCA', pretrained_path='', input_size=224, fc_drop_rate=0.5, drop=0.0, attn_drop_rate=0.0, drop_path=0.1, disable_eval_during_finetuning=False, opt='adamw', opt_eps=1e-08, opt_betas=(0.9, 0.999), clip_grad=None, momentum=0.9, weight_decay=0.05, weight_decay_end=None, lr=0.0005, layer_decay=0.75, warmup_lr=1e-06, min_lr=1e-06, warmup_epochs=5, warmup_steps=-1, color_jitter=0.4, aa='rand-m7-n4-mstd0.5-inc1', smoothing=0.1, train_interpolation='bicubic', crop_pct=None, short_side_size=224, reprob=0.25, remode='pixel', recount=1, resplit=False, mixup=0.8, cutmix=1.0, cutmix_minmax=None, mixup_prob=1.0, mixup_switch_prob=0.5, mixup_mode='batch', finetune='', model_key='model|module', model_prefix='', data_path='/gpfs/work4/0/prjs0951/simi/data/multibypass140', eval_data_path='/gpfs/work4/0/prjs0951/simi/data/multibypass140', nb_classes=12, imagenet_default_mean_and_std=True, data_strategy='online', output_mode='key_frame', cut_black=True, num_frames=16, sampling_rate=4, data_set='MultiBypass140', data_fps='1fps', output_dir='/gpfs/work4/0/prjs0951/simi/results/MultiBypass140_Bern_fold0_ImageNet_100pct/surgformer_HTA_KCA_MultiBypass140_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4/', log_dir='/gpfs/work4/0/prjs0951/simi/results/MultiBypass140_Bern_fold0_ImageNet_100pct/surgformer_HTA_KCA_MultiBypass140_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4/', device='cuda', seed=0, resume='/gpfs/work4/0/prjs0951/simi/results/MultiBypass140_Bern_fold0_ImageNet_100pct/surgformer_HTA_KCA_MultiBypass140_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4//checkpoint-best-extracted.pth', auto_resume=False, save_ckpt=True, start_epoch=0, eval=True, dist_eval=False, num_workers=8, train_fraction=1.0, pin_mem=True, world_size=1, local_rank=-1, dist_on_itp=False, dist_url='env://', enable_deepspeed=False, rank=0, gpu=0, distributed=True, dist_backend='nccl')
+train - 1fps : Number of the class = 12
+Data Strategy: online
+Output Mode: key_frame
+Cut Black: True
+16 Frames with Temporal sample Rate 4
+val - 1fps : Number of the class = 12
+Data Strategy: online
+Output Mode: key_frame
+Cut Black: True
+16 Frames with Temporal sample Rate 4
+test - 1fps : Number of the class = 12
+Data Strategy: online
+Output Mode: key_frame
+Cut Black: True
+16 Frames with Temporal sample Rate 4
+Train Dataset Length:  166489
+Val Dataset Length:  46497
+Test Dataset Length:  92842
+Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x146a1d95b520>
+Sequential Sampler For Val/Test
+Log dir: /gpfs/work4/0/prjs0951/simi/results/MultiBypass140_Bern_fold0_ImageNet_100pct/surgformer_HTA_KCA_MultiBypass140_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4/surgformer_HTA_KCA_MultiBypass140_0.0005_0.75_online_key_frame_frame16_Fixed_Stride_4/log
+Mixup is activated!
+Patch size = (16, 16)
+Window size: = (16, 14, 14)
+number of params: 177989388
+LR = 0.00012500
+Batch size = 16
+Update frequent = 1
+Number of training examples = 166489
+Number of training training per epoch = 10405
+Assigned values = [0.023757264018058777, 0.03167635202407837, 0.04223513603210449, 0.056313514709472656, 0.07508468627929688, 0.1001129150390625, 0.13348388671875, 0.177978515625, 0.2373046875, 0.31640625, 0.421875, 0.5625, 0.75, 1.0]
+Skip weight decay list:  {'pos_embed', 'cls_token', 'time_embed'}
+Param groups = {
+  "layer_0_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "cls_token",
+      "pos_embed",
+      "time_embed",
+      "patch_embed.proj.bias"
+    ],
+    "lr_scale": 0.023757264018058777
+  },
+  "layer_0_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "patch_embed.proj.weight"
+    ],
+    "lr_scale": 0.023757264018058777
+  },
+  "layer_1_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.0.norm1.weight",
+      "blocks.0.norm1.bias",
+      "blocks.0.attn.qkv.bias",
+      "blocks.0.attn.proj.bias",
+      "blocks.0.temporal_norm1.weight",
+      "blocks.0.temporal_norm1.bias",
+      "blocks.0.temporal_attn.qkv_4.bias",
+      "blocks.0.temporal_attn.qkv_8.bias",
+      "blocks.0.temporal_attn.qkv_16.bias",
+      "blocks.0.temporal_attn.proj_4.bias",
+      "blocks.0.temporal_attn.proj_8.bias",
+      "blocks.0.temporal_attn.proj_16.bias",
+      "blocks.0.temporal_fc.bias",
+      "blocks.0.norm2.weight",
+      "blocks.0.norm2.bias",
+      "blocks.0.mlp.fc1.bias",
+      "blocks.0.mlp.fc2.bias",
+      "blocks.0.norm_cls.weight",
+      "blocks.0.norm_cls.bias"
+    ],
+    "lr_scale": 0.03167635202407837
+  },
+  "layer_1_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.0.attn.qkv.weight",
+      "blocks.0.attn.proj.weight",
+      "blocks.0.temporal_attn.qkv_4.weight",
+      "blocks.0.temporal_attn.qkv_8.weight",
+      "blocks.0.temporal_attn.qkv_16.weight",
+      "blocks.0.temporal_attn.proj_4.weight",
+      "blocks.0.temporal_attn.proj_8.weight",
+      "blocks.0.temporal_attn.proj_16.weight",
+      "blocks.0.temporal_fc.weight",
+      "blocks.0.mlp.fc1.weight",
+      "blocks.0.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.03167635202407837
+  },
+  "layer_2_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.1.norm1.weight",
+      "blocks.1.norm1.bias",
+      "blocks.1.attn.qkv.bias",
+      "blocks.1.attn.proj.bias",
+      "blocks.1.temporal_norm1.weight",
+      "blocks.1.temporal_norm1.bias",
+      "blocks.1.temporal_attn.qkv_4.bias",
+      "blocks.1.temporal_attn.qkv_8.bias",
+      "blocks.1.temporal_attn.qkv_16.bias",
+      "blocks.1.temporal_attn.proj_4.bias",
+      "blocks.1.temporal_attn.proj_8.bias",
+      "blocks.1.temporal_attn.proj_16.bias",
+      "blocks.1.temporal_fc.bias",
+      "blocks.1.norm2.weight",
+      "blocks.1.norm2.bias",
+      "blocks.1.mlp.fc1.bias",
+      "blocks.1.mlp.fc2.bias",
+      "blocks.1.norm_cls.weight",
+      "blocks.1.norm_cls.bias"
+    ],
+    "lr_scale": 0.04223513603210449
+  },
+  "layer_2_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.1.attn.qkv.weight",
+      "blocks.1.attn.proj.weight",
+      "blocks.1.temporal_attn.qkv_4.weight",
+      "blocks.1.temporal_attn.qkv_8.weight",
+      "blocks.1.temporal_attn.qkv_16.weight",
+      "blocks.1.temporal_attn.proj_4.weight",
+      "blocks.1.temporal_attn.proj_8.weight",
+      "blocks.1.temporal_attn.proj_16.weight",
+      "blocks.1.temporal_fc.weight",
+      "blocks.1.mlp.fc1.weight",
+      "blocks.1.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.04223513603210449
+  },
+  "layer_3_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.2.norm1.weight",
+      "blocks.2.norm1.bias",
+      "blocks.2.attn.qkv.bias",
+      "blocks.2.attn.proj.bias",
+      "blocks.2.temporal_norm1.weight",
+      "blocks.2.temporal_norm1.bias",
+      "blocks.2.temporal_attn.qkv_4.bias",
+      "blocks.2.temporal_attn.qkv_8.bias",
+      "blocks.2.temporal_attn.qkv_16.bias",
+      "blocks.2.temporal_attn.proj_4.bias",
+      "blocks.2.temporal_attn.proj_8.bias",
+      "blocks.2.temporal_attn.proj_16.bias",
+      "blocks.2.temporal_fc.bias",
+      "blocks.2.norm2.weight",
+      "blocks.2.norm2.bias",
+      "blocks.2.mlp.fc1.bias",
+      "blocks.2.mlp.fc2.bias",
+      "blocks.2.norm_cls.weight",
+      "blocks.2.norm_cls.bias"
+    ],
+    "lr_scale": 0.056313514709472656
+  },
+  "layer_3_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.2.attn.qkv.weight",
+      "blocks.2.attn.proj.weight",
+      "blocks.2.temporal_attn.qkv_4.weight",
+      "blocks.2.temporal_attn.qkv_8.weight",
+      "blocks.2.temporal_attn.qkv_16.weight",
+      "blocks.2.temporal_attn.proj_4.weight",
+      "blocks.2.temporal_attn.proj_8.weight",
+      "blocks.2.temporal_attn.proj_16.weight",
+      "blocks.2.temporal_fc.weight",
+      "blocks.2.mlp.fc1.weight",
+      "blocks.2.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.056313514709472656
+  },
+  "layer_4_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.3.norm1.weight",
+      "blocks.3.norm1.bias",
+      "blocks.3.attn.qkv.bias",
+      "blocks.3.attn.proj.bias",
+      "blocks.3.temporal_norm1.weight",
+      "blocks.3.temporal_norm1.bias",
+      "blocks.3.temporal_attn.qkv_4.bias",
+      "blocks.3.temporal_attn.qkv_8.bias",
+      "blocks.3.temporal_attn.qkv_16.bias",
+      "blocks.3.temporal_attn.proj_4.bias",
+      "blocks.3.temporal_attn.proj_8.bias",
+      "blocks.3.temporal_attn.proj_16.bias",
+      "blocks.3.temporal_fc.bias",
+      "blocks.3.norm2.weight",
+      "blocks.3.norm2.bias",
+      "blocks.3.mlp.fc1.bias",
+      "blocks.3.mlp.fc2.bias",
+      "blocks.3.norm_cls.weight",
+      "blocks.3.norm_cls.bias"
+    ],
+    "lr_scale": 0.07508468627929688
+  },
+  "layer_4_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.3.attn.qkv.weight",
+      "blocks.3.attn.proj.weight",
+      "blocks.3.temporal_attn.qkv_4.weight",
+      "blocks.3.temporal_attn.qkv_8.weight",
+      "blocks.3.temporal_attn.qkv_16.weight",
+      "blocks.3.temporal_attn.proj_4.weight",
+      "blocks.3.temporal_attn.proj_8.weight",
+      "blocks.3.temporal_attn.proj_16.weight",
+      "blocks.3.temporal_fc.weight",
+      "blocks.3.mlp.fc1.weight",
+      "blocks.3.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.07508468627929688
+  },
+  "layer_5_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.4.norm1.weight",
+      "blocks.4.norm1.bias",
+      "blocks.4.attn.qkv.bias",
+      "blocks.4.attn.proj.bias",
+      "blocks.4.temporal_norm1.weight",
+      "blocks.4.temporal_norm1.bias",
+      "blocks.4.temporal_attn.qkv_4.bias",
+      "blocks.4.temporal_attn.qkv_8.bias",
+      "blocks.4.temporal_attn.qkv_16.bias",
+      "blocks.4.temporal_attn.proj_4.bias",
+      "blocks.4.temporal_attn.proj_8.bias",
+      "blocks.4.temporal_attn.proj_16.bias",
+      "blocks.4.temporal_fc.bias",
+      "blocks.4.norm2.weight",
+      "blocks.4.norm2.bias",
+      "blocks.4.mlp.fc1.bias",
+      "blocks.4.mlp.fc2.bias",
+      "blocks.4.norm_cls.weight",
+      "blocks.4.norm_cls.bias"
+    ],
+    "lr_scale": 0.1001129150390625
+  },
+  "layer_5_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.4.attn.qkv.weight",
+      "blocks.4.attn.proj.weight",
+      "blocks.4.temporal_attn.qkv_4.weight",
+      "blocks.4.temporal_attn.qkv_8.weight",
+      "blocks.4.temporal_attn.qkv_16.weight",
+      "blocks.4.temporal_attn.proj_4.weight",
+      "blocks.4.temporal_attn.proj_8.weight",
+      "blocks.4.temporal_attn.proj_16.weight",
+      "blocks.4.temporal_fc.weight",
+      "blocks.4.mlp.fc1.weight",
+      "blocks.4.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.1001129150390625
+  },
+  "layer_6_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.5.norm1.weight",
+      "blocks.5.norm1.bias",
+      "blocks.5.attn.qkv.bias",
+      "blocks.5.attn.proj.bias",
+      "blocks.5.temporal_norm1.weight",
+      "blocks.5.temporal_norm1.bias",
+      "blocks.5.temporal_attn.qkv_4.bias",
+      "blocks.5.temporal_attn.qkv_8.bias",
+      "blocks.5.temporal_attn.qkv_16.bias",
+      "blocks.5.temporal_attn.proj_4.bias",
+      "blocks.5.temporal_attn.proj_8.bias",
+      "blocks.5.temporal_attn.proj_16.bias",
+      "blocks.5.temporal_fc.bias",
+      "blocks.5.norm2.weight",
+      "blocks.5.norm2.bias",
+      "blocks.5.mlp.fc1.bias",
+      "blocks.5.mlp.fc2.bias",
+      "blocks.5.norm_cls.weight",
+      "blocks.5.norm_cls.bias"
+    ],
+    "lr_scale": 0.13348388671875
+  },
+  "layer_6_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.5.attn.qkv.weight",
+      "blocks.5.attn.proj.weight",
+      "blocks.5.temporal_attn.qkv_4.weight",
+      "blocks.5.temporal_attn.qkv_8.weight",
+      "blocks.5.temporal_attn.qkv_16.weight",
+      "blocks.5.temporal_attn.proj_4.weight",
+      "blocks.5.temporal_attn.proj_8.weight",
+      "blocks.5.temporal_attn.proj_16.weight",
+      "blocks.5.temporal_fc.weight",
+      "blocks.5.mlp.fc1.weight",
+      "blocks.5.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.13348388671875
+  },
+  "layer_7_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.6.norm1.weight",
+      "blocks.6.norm1.bias",
+      "blocks.6.attn.qkv.bias",
+      "blocks.6.attn.proj.bias",
+      "blocks.6.temporal_norm1.weight",
+      "blocks.6.temporal_norm1.bias",
+      "blocks.6.temporal_attn.qkv_4.bias",
+      "blocks.6.temporal_attn.qkv_8.bias",
+      "blocks.6.temporal_attn.qkv_16.bias",
+      "blocks.6.temporal_attn.proj_4.bias",
+      "blocks.6.temporal_attn.proj_8.bias",
+      "blocks.6.temporal_attn.proj_16.bias",
+      "blocks.6.temporal_fc.bias",
+      "blocks.6.norm2.weight",
+      "blocks.6.norm2.bias",
+      "blocks.6.mlp.fc1.bias",
+      "blocks.6.mlp.fc2.bias",
+      "blocks.6.norm_cls.weight",
+      "blocks.6.norm_cls.bias"
+    ],
+    "lr_scale": 0.177978515625
+  },
+  "layer_7_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.6.attn.qkv.weight",
+      "blocks.6.attn.proj.weight",
+      "blocks.6.temporal_attn.qkv_4.weight",
+      "blocks.6.temporal_attn.qkv_8.weight",
+      "blocks.6.temporal_attn.qkv_16.weight",
+      "blocks.6.temporal_attn.proj_4.weight",
+      "blocks.6.temporal_attn.proj_8.weight",
+      "blocks.6.temporal_attn.proj_16.weight",
+      "blocks.6.temporal_fc.weight",
+      "blocks.6.mlp.fc1.weight",
+      "blocks.6.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.177978515625
+  },
+  "layer_8_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.7.norm1.weight",
+      "blocks.7.norm1.bias",
+      "blocks.7.attn.qkv.bias",
+      "blocks.7.attn.proj.bias",
+      "blocks.7.temporal_norm1.weight",
+      "blocks.7.temporal_norm1.bias",
+      "blocks.7.temporal_attn.qkv_4.bias",
+      "blocks.7.temporal_attn.qkv_8.bias",
+      "blocks.7.temporal_attn.qkv_16.bias",
+      "blocks.7.temporal_attn.proj_4.bias",
+      "blocks.7.temporal_attn.proj_8.bias",
+      "blocks.7.temporal_attn.proj_16.bias",
+      "blocks.7.temporal_fc.bias",
+      "blocks.7.norm2.weight",
+      "blocks.7.norm2.bias",
+      "blocks.7.mlp.fc1.bias",
+      "blocks.7.mlp.fc2.bias",
+      "blocks.7.norm_cls.weight",
+      "blocks.7.norm_cls.bias"
+    ],
+    "lr_scale": 0.2373046875
+  },
+  "layer_8_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.7.attn.qkv.weight",
+      "blocks.7.attn.proj.weight",
+      "blocks.7.temporal_attn.qkv_4.weight",
+      "blocks.7.temporal_attn.qkv_8.weight",
+      "blocks.7.temporal_attn.qkv_16.weight",
+      "blocks.7.temporal_attn.proj_4.weight",
+      "blocks.7.temporal_attn.proj_8.weight",
+      "blocks.7.temporal_attn.proj_16.weight",
+      "blocks.7.temporal_fc.weight",
+      "blocks.7.mlp.fc1.weight",
+      "blocks.7.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.2373046875
+  },
+  "layer_9_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.8.norm1.weight",
+      "blocks.8.norm1.bias",
+      "blocks.8.attn.qkv.bias",
+      "blocks.8.attn.proj.bias",
+      "blocks.8.temporal_norm1.weight",
+      "blocks.8.temporal_norm1.bias",
+      "blocks.8.temporal_attn.qkv_4.bias",
+      "blocks.8.temporal_attn.qkv_8.bias",
+      "blocks.8.temporal_attn.qkv_16.bias",
+      "blocks.8.temporal_attn.proj_4.bias",
+      "blocks.8.temporal_attn.proj_8.bias",
+      "blocks.8.temporal_attn.proj_16.bias",
+      "blocks.8.temporal_fc.bias",
+      "blocks.8.norm2.weight",
+      "blocks.8.norm2.bias",
+      "blocks.8.mlp.fc1.bias",
+      "blocks.8.mlp.fc2.bias",
+      "blocks.8.norm_cls.weight",
+      "blocks.8.norm_cls.bias"
+    ],
+    "lr_scale": 0.31640625
+  },
+  "layer_9_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.8.attn.qkv.weight",
+      "blocks.8.attn.proj.weight",
+      "blocks.8.temporal_attn.qkv_4.weight",
+      "blocks.8.temporal_attn.qkv_8.weight",
+      "blocks.8.temporal_attn.qkv_16.weight",
+      "blocks.8.temporal_attn.proj_4.weight",
+      "blocks.8.temporal_attn.proj_8.weight",
+      "blocks.8.temporal_attn.proj_16.weight",
+      "blocks.8.temporal_fc.weight",
+      "blocks.8.mlp.fc1.weight",
+      "blocks.8.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.31640625
+  },
+  "layer_10_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.9.norm1.weight",
+      "blocks.9.norm1.bias",
+      "blocks.9.attn.qkv.bias",
+      "blocks.9.attn.proj.bias",
+      "blocks.9.temporal_norm1.weight",
+      "blocks.9.temporal_norm1.bias",
+      "blocks.9.temporal_attn.qkv_4.bias",
+      "blocks.9.temporal_attn.qkv_8.bias",
+      "blocks.9.temporal_attn.qkv_16.bias",
+      "blocks.9.temporal_attn.proj_4.bias",
+      "blocks.9.temporal_attn.proj_8.bias",
+      "blocks.9.temporal_attn.proj_16.bias",
+      "blocks.9.temporal_fc.bias",
+      "blocks.9.norm2.weight",
+      "blocks.9.norm2.bias",
+      "blocks.9.mlp.fc1.bias",
+      "blocks.9.mlp.fc2.bias",
+      "blocks.9.norm_cls.weight",
+      "blocks.9.norm_cls.bias"
+    ],
+    "lr_scale": 0.421875
+  },
+  "layer_10_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.9.attn.qkv.weight",
+      "blocks.9.attn.proj.weight",
+      "blocks.9.temporal_attn.qkv_4.weight",
+      "blocks.9.temporal_attn.qkv_8.weight",
+      "blocks.9.temporal_attn.qkv_16.weight",
+      "blocks.9.temporal_attn.proj_4.weight",
+      "blocks.9.temporal_attn.proj_8.weight",
+      "blocks.9.temporal_attn.proj_16.weight",
+      "blocks.9.temporal_fc.weight",
+      "blocks.9.mlp.fc1.weight",
+      "blocks.9.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.421875
+  },
+  "layer_11_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.10.norm1.weight",
+      "blocks.10.norm1.bias",
+      "blocks.10.attn.qkv.bias",
+      "blocks.10.attn.proj.bias",
+      "blocks.10.temporal_norm1.weight",
+      "blocks.10.temporal_norm1.bias",
+      "blocks.10.temporal_attn.qkv_4.bias",
+      "blocks.10.temporal_attn.qkv_8.bias",
+      "blocks.10.temporal_attn.qkv_16.bias",
+      "blocks.10.temporal_attn.proj_4.bias",
+      "blocks.10.temporal_attn.proj_8.bias",
+      "blocks.10.temporal_attn.proj_16.bias",
+      "blocks.10.temporal_fc.bias",
+      "blocks.10.norm2.weight",
+      "blocks.10.norm2.bias",
+      "blocks.10.mlp.fc1.bias",
+      "blocks.10.mlp.fc2.bias",
+      "blocks.10.norm_cls.weight",
+      "blocks.10.norm_cls.bias"
+    ],
+    "lr_scale": 0.5625
+  },
+  "layer_11_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.10.attn.qkv.weight",
+      "blocks.10.attn.proj.weight",
+      "blocks.10.temporal_attn.qkv_4.weight",
+      "blocks.10.temporal_attn.qkv_8.weight",
+      "blocks.10.temporal_attn.qkv_16.weight",
+      "blocks.10.temporal_attn.proj_4.weight",
+      "blocks.10.temporal_attn.proj_8.weight",
+      "blocks.10.temporal_attn.proj_16.weight",
+      "blocks.10.temporal_fc.weight",
+      "blocks.10.mlp.fc1.weight",
+      "blocks.10.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.5625
+  },
+  "layer_12_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "blocks.11.norm1.weight",
+      "blocks.11.norm1.bias",
+      "blocks.11.attn.qkv.bias",
+      "blocks.11.attn.proj.bias",
+      "blocks.11.temporal_norm1.weight",
+      "blocks.11.temporal_norm1.bias",
+      "blocks.11.temporal_attn.qkv_4.bias",
+      "blocks.11.temporal_attn.qkv_8.bias",
+      "blocks.11.temporal_attn.qkv_16.bias",
+      "blocks.11.temporal_attn.proj_4.bias",
+      "blocks.11.temporal_attn.proj_8.bias",
+      "blocks.11.temporal_attn.proj_16.bias",
+      "blocks.11.temporal_fc.bias",
+      "blocks.11.norm2.weight",
+      "blocks.11.norm2.bias",
+      "blocks.11.mlp.fc1.bias",
+      "blocks.11.mlp.fc2.bias",
+      "blocks.11.norm_cls.weight",
+      "blocks.11.norm_cls.bias"
+    ],
+    "lr_scale": 0.75
+  },
+  "layer_12_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "blocks.11.attn.qkv.weight",
+      "blocks.11.attn.proj.weight",
+      "blocks.11.temporal_attn.qkv_4.weight",
+      "blocks.11.temporal_attn.qkv_8.weight",
+      "blocks.11.temporal_attn.qkv_16.weight",
+      "blocks.11.temporal_attn.proj_4.weight",
+      "blocks.11.temporal_attn.proj_8.weight",
+      "blocks.11.temporal_attn.proj_16.weight",
+      "blocks.11.temporal_fc.weight",
+      "blocks.11.mlp.fc1.weight",
+      "blocks.11.mlp.fc2.weight"
+    ],
+    "lr_scale": 0.75
+  },
+  "layer_13_no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "norm.weight",
+      "norm.bias",
+      "head.bias"
+    ],
+    "lr_scale": 1.0
+  },
+  "layer_13_decay": {
+    "weight_decay": 0.05,
+    "params": [
+      "head.weight"
+    ],
+    "lr_scale": 1.0
+  }
+}
+optimizer settings: {'lr': 0.000125, 'weight_decay': 0.0, 'eps': 1e-08, 'betas': (0.9, 0.999)}
+Use step level LR scheduler!
+Set warmup steps = 52025
+Set warmup steps = 0
+Max WD = 0.0500000, Min WD = 0.0500000
+criterion = SoftTargetCrossEntropy()
+Resume checkpoint /gpfs/work4/0/prjs0951/simi/results/MultiBypass140_Bern_fold0_ImageNet_100pct/surgformer_HTA_KCA_MultiBypass140_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4//checkpoint-best-extracted.pth
+Test:  [  0/726]  eta: 4:48:40  loss: 0.1362 (0.1362)  acc1: 100.0000 (100.0000)  acc5: 100.0000 (100.0000)  time: 23.8576  data: 13.3237  max mem: 17809
+Test:  [ 10/726]  eta: 0:44:02  loss: 0.8946 (2.1714)  acc1: 69.5312 (46.7330)  acc5: 98.4375 (90.6960)  time: 3.6908  data: 1.2114  max mem: 17809
+Test:  [ 20/726]  eta: 0:32:08  loss: 0.3360 (1.3217)  acc1: 82.8125 (66.2574)  acc5: 100.0000 (95.1265)  time: 1.6752  data: 0.0002  max mem: 17809
+Test:  [ 30/726]  eta: 0:27:44  loss: 0.1779 (0.9558)  acc1: 100.0000 (76.9909)  acc5: 100.0000 (96.6986)  time: 1.6768  data: 0.0002  max mem: 17809
+Test:  [ 40/726]  eta: 0:25:21  loss: 0.1654 (0.7890)  acc1: 100.0000 (81.3262)  acc5: 100.0000 (97.4848)  time: 1.6776  data: 0.0002  max mem: 17809
+Test:  [ 50/726]  eta: 0:23:47  loss: 0.1311 (0.6729)  acc1: 100.0000 (84.5588)  acc5: 100.0000 (97.8248)  time: 1.6778  data: 0.0002  max mem: 17809
+Test:  [ 60/726]  eta: 0:22:39  loss: 0.1311 (0.6677)  acc1: 100.0000 (84.5031)  acc5: 100.0000 (97.3745)  time: 1.6783  data: 0.0002  max mem: 17809
+Test:  [ 70/726]  eta: 0:21:45  loss: 0.1606 (0.6205)  acc1: 99.2188 (85.7064)  acc5: 100.0000 (97.7333)  time: 1.6788  data: 0.0002  max mem: 17809
+Test:  [ 80/726]  eta: 0:21:00  loss: 0.1518 (0.5619)  acc1: 100.0000 (87.4132)  acc5: 100.0000 (98.0131)  time: 1.6788  data: 0.0002  max mem: 17809
+Test:  [ 90/726]  eta: 0:20:21  loss: 0.1299 (0.5220)  acc1: 100.0000 (88.4787)  acc5: 100.0000 (98.2315)  time: 1.6788  data: 0.0002  max mem: 17809
+Test:  [100/726]  eta: 0:19:47  loss: 0.1555 (0.5169)  acc1: 100.0000 (88.3199)  acc5: 100.0000 (98.3679)  time: 1.6786  data: 0.0002  max mem: 17809
+Test:  [110/726]  eta: 0:19:16  loss: 0.1555 (0.4884)  acc1: 100.0000 (89.1470)  acc5: 100.0000 (98.5149)  time: 1.6786  data: 0.0002  max mem: 17809
+Test:  [120/726]  eta: 0:18:47  loss: 0.1515 (0.4953)  acc1: 98.4375 (88.7978)  acc5: 100.0000 (98.5989)  time: 1.6785  data: 0.0002  max mem: 17809
+Test:  [130/726]  eta: 0:18:20  loss: 0.1560 (0.4714)  acc1: 100.0000 (89.5157)  acc5: 100.0000 (98.7059)  time: 1.6783  data: 0.0002  max mem: 17809
+Test:  [140/726]  eta: 0:17:55  loss: 0.1368 (0.4522)  acc1: 100.0000 (89.9767)  acc5: 100.0000 (98.7977)  time: 1.6786  data: 0.0002  max mem: 17809
+Test:  [150/726]  eta: 0:17:31  loss: 0.2537 (0.4913)  acc1: 91.4062 (88.7935)  acc5: 100.0000 (98.7065)  time: 1.6791  data: 0.0002  max mem: 17809
+Test:  [160/726]  eta: 0:17:07  loss: 0.3142 (0.4803)  acc1: 93.7500 (89.1595)  acc5: 100.0000 (98.7869)  time: 1.6797  data: 0.0002  max mem: 17809
+Test:  [170/726]  eta: 0:16:45  loss: 0.2304 (0.4652)  acc1: 99.2188 (89.5742)  acc5: 100.0000 (98.8578)  time: 1.6797  data: 0.0002  max mem: 17809
+Test:  [180/726]  eta: 0:16:23  loss: 0.1702 (0.4577)  acc1: 96.8750 (89.6970)  acc5: 100.0000 (98.9209)  time: 1.6789  data: 0.0002  max mem: 17809
+Test:  [190/726]  eta: 0:16:01  loss: 0.1569 (0.4411)  acc1: 100.0000 (90.2364)  acc5: 100.0000 (98.9774)  time: 1.6787  data: 0.0002  max mem: 17809
+Test:  [200/726]  eta: 0:15:40  loss: 0.1401 (0.4395)  acc1: 100.0000 (90.2402)  acc5: 100.0000 (98.9700)  time: 1.6788  data: 0.0002  max mem: 17809
+Test:  [210/726]  eta: 0:15:20  loss: 0.3996 (0.4913)  acc1: 78.1250 (88.1665)  acc5: 100.0000 (98.7818)  time: 1.6791  data: 0.0002  max mem: 17809
+Test:  [220/726]  eta: 0:15:00  loss: 1.2787 (0.5269)  acc1: 45.3125 (86.6339)  acc5: 100.0000 (98.7698)  time: 1.6791  data: 0.0002  max mem: 17809
+Test:  [230/726]  eta: 0:14:40  loss: 1.0082 (0.5520)  acc1: 51.5625 (85.4302)  acc5: 100.0000 (98.7757)  time: 1.6792  data: 0.0002  max mem: 17809
+Test:  [240/726]  eta: 0:14:20  loss: 0.6254 (0.5444)  acc1: 75.7812 (85.6328)  acc5: 100.0000 (98.8006)  time: 1.6793  data: 0.0002  max mem: 17809
+Test:  [250/726]  eta: 0:14:01  loss: 0.1665 (0.5407)  acc1: 100.0000 (85.7850)  acc5: 100.0000 (98.7954)  time: 1.6791  data: 0.0002  max mem: 17809
+Test:  [260/726]  eta: 0:13:41  loss: 0.1497 (0.5253)  acc1: 100.0000 (86.3206)  acc5: 100.0000 (98.8416)  time: 1.6791  data: 0.0002  max mem: 17809
+Test:  [270/726]  eta: 0:13:22  loss: 0.1291 (0.5254)  acc1: 100.0000 (86.2950)  acc5: 100.0000 (98.8843)  time: 1.6794  data: 0.0002  max mem: 17809
+Test:  [280/726]  eta: 0:13:03  loss: 0.1889 (0.5221)  acc1: 96.0938 (86.3935)  acc5: 100.0000 (98.9185)  time: 1.6793  data: 0.0002  max mem: 17809
+Test:  [290/726]  eta: 0:12:45  loss: 0.1585 (0.5155)  acc1: 98.4375 (86.5442)  acc5: 100.0000 (98.9503)  time: 1.6792  data: 0.0002  max mem: 17809
+Test:  [300/726]  eta: 0:12:26  loss: 0.1364 (0.5078)  acc1: 100.0000 (86.7836)  acc5: 100.0000 (98.9852)  time: 1.6792  data: 0.0002  max mem: 17809
+Test:  [310/726]  eta: 0:12:07  loss: 0.1733 (0.5058)  acc1: 99.2188 (86.8845)  acc5: 100.0000 (98.9424)  time: 1.6791  data: 0.0002  max mem: 17809
+Test:  [320/726]  eta: 0:11:49  loss: 0.1645 (0.5014)  acc1: 100.0000 (87.0449)  acc5: 100.0000 (98.9681)  time: 1.6789  data: 0.0002  max mem: 17809
+Test:  [330/726]  eta: 0:11:31  loss: 0.1377 (0.4945)  acc1: 100.0000 (87.3065)  acc5: 100.0000 (98.9686)  time: 1.6791  data: 0.0002  max mem: 17809
+Test:  [340/726]  eta: 0:11:13  loss: 0.1294 (0.4913)  acc1: 100.0000 (87.3076)  acc5: 100.0000 (98.9965)  time: 1.6793  data: 0.0002  max mem: 17809
+Test:  [350/726]  eta: 0:10:54  loss: 0.2084 (0.5058)  acc1: 93.7500 (86.9636)  acc5: 100.0000 (98.7068)  time: 1.6792  data: 0.0002  max mem: 17809
+Test:  [360/726]  eta: 0:10:36  loss: 0.1631 (0.5012)  acc1: 98.4375 (87.0823)  acc5: 100.0000 (98.7426)  time: 1.6792  data: 0.0002  max mem: 17809
+Test:  [370/726]  eta: 0:10:18  loss: 0.1411 (0.4961)  acc1: 100.0000 (87.2894)  acc5: 100.0000 (98.7723)  time: 1.6795  data: 0.0002  max mem: 17809
+Test:  [380/726]  eta: 0:10:00  loss: 0.1555 (0.5009)  acc1: 100.0000 (87.2150)  acc5: 100.0000 (98.7000)  time: 1.6794  data: 0.0002  max mem: 17809
+Test:  [390/726]  eta: 0:09:43  loss: 0.1576 (0.4955)  acc1: 100.0000 (87.3821)  acc5: 100.0000 (98.7332)  time: 1.6793  data: 0.0002  max mem: 17809
+Test:  [400/726]  eta: 0:09:25  loss: 0.1468 (0.4885)  acc1: 100.0000 (87.6013)  acc5: 100.0000 (98.7648)  time: 1.6795  data: 0.0002  max mem: 17809
+Test:  [410/726]  eta: 0:09:07  loss: 0.1558 (0.4858)  acc1: 100.0000 (87.6996)  acc5: 100.0000 (98.7854)  time: 1.6788  data: 0.0002  max mem: 17809
+Test:  [420/726]  eta: 0:08:49  loss: 0.1526 (0.4780)  acc1: 100.0000 (87.9713)  acc5: 100.0000 (98.8142)  time: 1.6786  data: 0.0003  max mem: 17809
+Test:  [430/726]  eta: 0:08:32  loss: 0.1339 (0.4783)  acc1: 100.0000 (87.9550)  acc5: 100.0000 (98.8145)  time: 1.6788  data: 0.0002  max mem: 17809
+Test:  [440/726]  eta: 0:08:14  loss: 0.1392 (0.4708)  acc1: 100.0000 (88.2122)  acc5: 100.0000 (98.8414)  time: 1.6790  data: 0.0002  max mem: 17809
+Test:  [450/726]  eta: 0:07:56  loss: 0.1276 (0.4650)  acc1: 100.0000 (88.4112)  acc5: 100.0000 (98.8671)  time: 1.6794  data: 0.0002  max mem: 17809
+Test:  [460/726]  eta: 0:07:39  loss: 0.1583 (0.4746)  acc1: 98.4375 (88.1508)  acc5: 100.0000 (98.7663)  time: 1.6793  data: 0.0002  max mem: 17809
+Test:  [470/726]  eta: 0:07:21  loss: 0.2399 (0.4846)  acc1: 90.6250 (87.9462)  acc5: 100.0000 (98.6249)  time: 1.6795  data: 0.0002  max mem: 17809
+Test:  [480/726]  eta: 0:07:04  loss: 0.5034 (0.4958)  acc1: 85.9375 (87.5747)  acc5: 100.0000 (98.5853)  time: 1.6796  data: 0.0002  max mem: 17809
+Test:  [490/726]  eta: 0:06:46  loss: 0.2060 (0.4888)  acc1: 96.0938 (87.8246)  acc5: 100.0000 (98.6141)  time: 1.6795  data: 0.0002  max mem: 17809
+Test:  [500/726]  eta: 0:06:29  loss: 0.1476 (0.4827)  acc1: 100.0000 (88.0380)  acc5: 100.0000 (98.6418)  time: 1.6796  data: 0.0002  max mem: 17809
+Test:  [510/726]  eta: 0:06:12  loss: 0.1650 (0.4847)  acc1: 100.0000 (87.9847)  acc5: 100.0000 (98.6301)  time: 1.6790  data: 0.0002  max mem: 17809
+Test:  [520/726]  eta: 0:05:54  loss: 0.1693 (0.4920)  acc1: 99.2188 (87.8404)  acc5: 100.0000 (98.5949)  time: 1.6788  data: 0.0002  max mem: 17809
+Test:  [530/726]  eta: 0:05:37  loss: 0.1693 (0.4947)  acc1: 99.2188 (87.7634)  acc5: 100.0000 (98.5508)  time: 1.6790  data: 0.0002  max mem: 17809
+Test:  [540/726]  eta: 0:05:19  loss: 0.1408 (0.4943)  acc1: 97.6562 (87.8061)  acc5: 100.0000 (98.5776)  time: 1.6792  data: 0.0002  max mem: 17809
+Test:  [550/726]  eta: 0:05:02  loss: 0.1393 (0.4917)  acc1: 100.0000 (87.9183)  acc5: 100.0000 (98.5750)  time: 1.6791  data: 0.0002  max mem: 17809
+Test:  [560/726]  eta: 0:04:45  loss: 0.1619 (0.4917)  acc1: 100.0000 (87.9470)  acc5: 100.0000 (98.5963)  time: 1.6788  data: 0.0002  max mem: 17809
+Test:  [570/726]  eta: 0:04:27  loss: 0.1587 (0.4859)  acc1: 100.0000 (88.1499)  acc5: 100.0000 (98.6208)  time: 1.6798  data: 0.0002  max mem: 17809
+Test:  [580/726]  eta: 0:04:10  loss: 0.1541 (0.4839)  acc1: 100.0000 (88.2423)  acc5: 100.0000 (98.6392)  time: 1.7295  data: 0.0002  max mem: 17809
+Test:  [590/726]  eta: 0:03:53  loss: 0.1814 (0.4825)  acc1: 100.0000 (88.2852)  acc5: 100.0000 (98.6437)  time: 1.7294  data: 0.0002  max mem: 17809
+Test:  [600/726]  eta: 0:03:36  loss: 0.1734 (0.4823)  acc1: 100.0000 (88.3592)  acc5: 100.0000 (98.6000)  time: 1.6809  data: 0.0002  max mem: 17809
+Test:  [610/726]  eta: 0:03:19  loss: 0.1573 (0.4782)  acc1: 100.0000 (88.4922)  acc5: 100.0000 (98.6229)  time: 1.6805  data: 0.0002  max mem: 17809
+Test:  [620/726]  eta: 0:03:01  loss: 0.1573 (0.4771)  acc1: 100.0000 (88.5064)  acc5: 100.0000 (98.6451)  time: 1.6799  data: 0.0002  max mem: 17809
+Test:  [630/726]  eta: 0:02:44  loss: 0.2263 (0.4740)  acc1: 99.2188 (88.6168)  acc5: 100.0000 (98.6666)  time: 1.6802  data: 0.0002  max mem: 17809
+Test:  [640/726]  eta: 0:02:27  loss: 0.1668 (0.4692)  acc1: 100.0000 (88.7761)  acc5: 100.0000 (98.6874)  time: 1.6799  data: 0.0002  max mem: 17809
+Test:  [650/726]  eta: 0:02:10  loss: 0.1737 (0.4675)  acc1: 100.0000 (88.8429)  acc5: 100.0000 (98.6979)  time: 1.6799  data: 0.0002  max mem: 17809
+Test:  [660/726]  eta: 0:01:53  loss: 0.2175 (0.4944)  acc1: 95.3125 (88.2316)  acc5: 100.0000 (98.3370)  time: 1.6799  data: 0.0002  max mem: 17809
+Test:  [670/726]  eta: 0:01:35  loss: 4.2371 (0.5567)  acc1: 0.0000 (86.9167)  acc5: 41.4062 (97.0613)  time: 1.6744  data: 0.0002  max mem: 17809
+Test:  [680/726]  eta: 0:01:18  loss: 3.9167 (0.5590)  acc1: 0.0000 (86.8690)  acc5: 50.0000 (97.0586)  time: 1.6743  data: 0.0002  max mem: 17809
+Test:  [690/726]  eta: 0:01:01  loss: 1.0621 (0.5988)  acc1: 64.0625 (85.8471)  acc5: 92.1875 (96.6568)  time: 1.6781  data: 0.0002  max mem: 17809
+Test:  [700/726]  eta: 0:00:44  loss: 4.2299 (0.6441)  acc1: 0.0000 (84.7573)  acc5: 77.3438 (96.3400)  time: 1.6776  data: 0.0002  max mem: 17809
+Test:  [710/726]  eta: 0:00:27  loss: 0.7788 (0.6403)  acc1: 48.4375 (84.8640)  acc5: 99.2188 (96.3904)  time: 1.6793  data: 0.0002  max mem: 17809
+Test:  [720/726]  eta: 0:00:10  loss: 0.1343 (0.6335)  acc1: 100.0000 (85.0652)  acc5: 100.0000 (96.4405)  time: 1.6792  data: 0.0001  max mem: 17809
+Test:  [725/726]  eta: 0:00:01  loss: 0.1321 (0.6370)  acc1: 100.0000 (84.9874)  acc5: 100.0000 (96.4197)  time: 1.6344  data: 0.0001  max mem: 17809
+Test: Total time: 0:20:41 (1.7099 s / it)
+* Acc@1 84.987 Acc@5 96.420 loss 0.637
+Save Files:  /gpfs/work4/0/prjs0951/simi/results/MultiBypass140_Bern_fold0_ImageNet_100pct/surgformer_HTA_KCA_MultiBypass140_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4/surgformer_HTA_KCA_MultiBypass140_0.0005_0.75_online_key_frame_frame16_Fixed_Stride_4/0.txt
+Start merging results...
+Reading individual output files
+Merge File 1/1: /gpfs/work4/0/prjs0951/simi/results/MultiBypass140_Bern_fold0_ImageNet_100pct/surgformer_HTA_KCA_MultiBypass140_0.0001_0.75_online_key_frame_frame16_Fixed_Stride_4/surgformer_HTA_KCA_MultiBypass140_0.0005_0.75_online_key_frame_frame16_Fixed_Stride_4/0.txt
+Computing final results
+92842
+Accuracy of the network on the 92842 test videos: Top-1: 84.99%, Top-5: 96.42%
